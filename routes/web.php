@@ -15,9 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Auth::routes();
 Route::group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['auth:api']], function () {
     Route::post('/upload', 'UploadController@upload');
 });
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/home', 'HomeController@index');
+    Route::get('/myuploads', 'HomeController@myUploads');
+});

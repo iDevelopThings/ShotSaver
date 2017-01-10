@@ -25,4 +25,13 @@ class HomeController extends Controller
     {
         return view('home');
     }
+
+    public function myUploads(Request $request)
+    {
+        $uploads = $request->user()->uploads()->orderBy('id', 'DESC')->paginate(20);
+
+        return view('uploads', [
+            'uploads' => $uploads,
+        ]);
+    }
 }

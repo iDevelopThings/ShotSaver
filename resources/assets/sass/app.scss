@@ -1,9 +1,60 @@
-
 // Fonts
 @import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
-
 // Variables
 @import "variables";
-
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+.home-header {
+  background: url("/images/shotsaverbg.png") center center;
+  background-size: cover;
+  text-align: center;
+  height: 400px;
+  margin-top: -20px;
+
+  .container {
+    height: 100%;
+    padding-top: 60px;
+  }
+
+  h1 {
+    color: #fff;
+    font-size: 8em;
+    margin-bottom: 0;
+
+    .blue {
+      color: #009bff;
+    }
+  }
+  p {
+    color: #e3e3e3;
+    font-size: 2em;
+  }
+}
+
+.home-info {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  background-color: #fff;
+
+  .item {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 20px;
+
+    h1 {
+      margin: 0;
+      font-size: 80px;
+      color: #009bff;
+    }
+    span {
+      margin: 0;
+      font-size: 30px;
+    }
+  }
+
+}

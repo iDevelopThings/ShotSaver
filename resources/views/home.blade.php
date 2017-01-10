@@ -30,6 +30,9 @@
                             Arguments
                         </h3>
                         <strong>api_token</strong> : <strong>{{Auth::user()->api_token}}</strong>
+                        <br>
+                        File Param: <strong>d</strong><br>
+                        Method: <strong>POST</strong>
                     </div>
                 </div>
             </div>
