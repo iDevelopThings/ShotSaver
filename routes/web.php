@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['auth:api']], function () {
     Route::post('/upload', 'UploadController@upload');
+    Route::post('/uploads', 'UploadController@myUploads');
 });
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index');

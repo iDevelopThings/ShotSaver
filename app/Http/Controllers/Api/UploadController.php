@@ -30,4 +30,11 @@ class UploadController extends Controller
             return "Failed to upload file.";
         }
     }
+
+    public function myUploads(Request $request)
+    {
+        $user = Auth::guard('api')->user();
+
+        return $user->uploads()->orderBy('id', 'DESC')->paginate(20);
+    }
 }
