@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class UploadController extends Controller
 {
+    /**
+     * Upload a file
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     */
     public function upload(Request $request)
     {
         $user = Auth::guard('api')->user();
@@ -31,6 +38,13 @@ class UploadController extends Controller
         }
     }
 
+    /**
+     * Get the users uploads
+     *
+     * @param Request $request
+     *
+     * @return mixed
+     */
     public function myUploads(Request $request)
     {
         $user = Auth::guard('api')->user();
