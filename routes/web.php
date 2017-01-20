@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['auth:api']], function () {
+Route::group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['auth:api', 'cors']], function () {
     Route::post('/upload', 'UploadController@upload');
     Route::get('/uploads', 'UploadController@myUploads');
 });
