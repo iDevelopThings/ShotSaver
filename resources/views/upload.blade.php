@@ -14,7 +14,7 @@
         <meta content="{{$dimensions['width']}}" property="og:image:width"/>
         <meta content="{{$dimensions['height']}}" property="og:image:height"/>
     @endif
-    <meta content=" " property="og:description"/>
+    <meta content="An image uploaded to ShotSaver by {{$file->user->name}}" property="og:description"/>
     <link href="{{$file->link}}" rel="image_src"/>
     <meta content="summary_large_image" name="twitter:card"/>
     <meta content="@ShotSaver" name="twitter:site"/>
@@ -22,8 +22,6 @@
     <meta content="An image uploaded to ShotSaver by {{$file->user->name}}" name="twitter:description"/>
     <meta content="{{$file->link}}" name="twitter:image"/>
 
-    {{--<meta property="og:image" content="{{$file->link}}">
-    <meta property="og:url" content="{{$file->link}}"/>--}}
 @endsection
 
 @section('content')
