@@ -2,25 +2,28 @@
 
 @section('meta')
     <meta name="twitter:card" content="summary"/>
-    <meta name="twitter:site" content="@ShotSaver"/>
-    <meta name="twitter:title" content="ShotSaver Image"/>
-    <meta name="twitter:description" content="An image uploaded to ShotSaver by {{$file->user->name}}"/>
-    <meta name="twitter:image" content="{{$file->link}}"/>
 
     <meta content="article" property="og:type"/>
     <meta content="{{request()->fullUrl()}}" property="og:url"/>
-    <meta content="{{$file->link}}" property="og:image"/>
-    @if($dimensions != null)
-        <meta content="{{$dimensions['width']}}" property="og:image:width"/>
-        <meta content="{{$dimensions['height']}}" property="og:image:height"/>
+    @if($type == 'image')
+        <meta content="{{$file->link}}" property="og:image"/>
+        <link href="{{$file->link}}" rel="image_src"/>
+        <meta content="summary_large_image" name="twitter:card"/>
+        <meta content="{{$file->link}}" name="twitter:image"/>
+        @if($dimensions != null)
+            <meta content="{{$dimensions['width']}}" property="og:image:width"/>
+            <meta content="{{$dimensions['height']}}" property="og:image:height"/>
+        @endif
+    @elseif($type == 'video')
+        <meta content="{{$file->link}}" property="og:video"/>
+        <link href="{{$file->link}}" rel="video_src"/>
+        <meta content="summary_large_video" name="twitter:card"/>
+        <meta content="{{$file->link}}" name="twitter:video"/>
     @endif
-    <meta content="An image uploaded to ShotSaver by {{$file->user->name}}" property="og:description"/>
-    <link href="{{$file->link}}" rel="image_src"/>
-    <meta content="summary_large_image" name="twitter:card"/>
+    <meta content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" property="og:description"/>
     <meta content="@ShotSaver" name="twitter:site"/>
     <meta content="ShotSaver" name="twitter:title"/>
-    <meta content="An image uploaded to ShotSaver by {{$file->user->name}}" name="twitter:description"/>
-    <meta content="{{$file->link}}" name="twitter:image"/>
+    <meta content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" name="twitter:description"/>
 
 @endsection
 
