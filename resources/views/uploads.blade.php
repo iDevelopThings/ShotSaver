@@ -18,7 +18,7 @@
                     <div class="progress" style="margin-bottom: 0; border-radius: 0;">
                         <div class="progress-bar @if($spaceUsed >= 100) progress-bar-danger @endif" role="progressbar"
                              aria-valuenow="{{$spaceUsed}}" aria-valuemin="0"
-                             aria-valuemax="100" style="width: {{$spaceUsed}}%;">
+                             aria-valuemax="{{$spaceUsed < 100 ? 100 : $spaceUsed}}" style="width: {{$spaceUsed}}%;">
                             {{$spaceUsed}}%
                         </div>
                     </div>
