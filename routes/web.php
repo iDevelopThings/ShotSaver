@@ -23,5 +23,5 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['auth:ap
 Route::get('file/{file}', 'FileController@viewFile')->name('file');
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/home', 'HomeController@index');
-	Route::get('/myuploads', 'HomeController@myUploads');
+	Route::get('/myuploads', 'FileController@uploads');
 });

@@ -31,6 +31,31 @@ class FileUploads extends Model
 		return round($this->size_in_bytes, 2);
 	}
 
+	public function previewImage()
+	{
+		switch ($this->fileType()) {
+			case "image":
+				return $this->link;
+				break;
+
+			case "video":
+				return '/images/video-icon.png';
+				break;
+
+			case "audio":
+				return '/images/audio-icon.png';
+				break;
+
+			case "compressed":
+				return '/images/compressed-icon.png';
+				break;
+
+			case "text":
+				return '/images/text-icon.png';
+				break;
+		}
+	}
+
 	public function dimensions()
 	{
 		if ($this->fileType() == 'image') {

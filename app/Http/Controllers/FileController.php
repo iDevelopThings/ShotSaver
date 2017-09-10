@@ -20,4 +20,17 @@ class FileController extends Controller
 			'dimensions' => $file->dimensions(),
 		]);
 	}
+
+	public function uploads(Request $request)
+	{
+		$uploads   = $request->user()->uploads()->orderBy('id', 'DESC')->paginate(20);
+		$spaceUsed = $request->user()->spaceUsed();
+
+		return view('uploads', [
+			'uploads'      => $uploads,
+			'spaceUsed'    => $spaceUsed,
+			'uploadsCount' => $request->user()->uploads()->count(),
+		]);
+	}
+
 }
