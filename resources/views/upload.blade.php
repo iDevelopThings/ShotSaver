@@ -2,6 +2,7 @@
 
 @section('meta')
     <meta property="og:image" content="{{$file->link}}">
+    <meta property="og:url" content="{{$file->link}}"/>
 @endsection
 
 @section('content')
