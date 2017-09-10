@@ -7755,4 +7755,11 @@ body {
   display: block;
 }
 
+.file-container {
+  margin-top: -24px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #000;
+}
+
 /*# sourceMappingURL=app.css.map */

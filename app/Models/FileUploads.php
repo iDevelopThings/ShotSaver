@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\FileValidation;
 use Illuminate\Database\Eloquent\Model;
 
 class FileUploads extends Model
@@ -20,5 +21,10 @@ class FileUploads extends Model
 		}
 
 		return round($this->size_in_bytes, 2);
+	}
+
+	public function fileType()
+	{
+		return app(FileValidation::class)->fileType($this->mime_type);
 	}
 }
