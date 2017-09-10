@@ -1,8 +1,14 @@
 @extends('layouts.app')
 
 @section('meta')
-    <meta property="og:image" content="{{$file->link}}">
-    <meta property="og:url" content="{{$file->link}}"/>
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:site" content="@ShotSaver"/>
+    <meta name="twitter:title" content="ShotSaver Image"/>
+    <meta name="twitter:description" content="No Description."/>
+    <meta name="twitter:image" content="{{$file->link}}"/>
+
+    {{--<meta property="og:image" content="{{$file->link}}">
+    <meta property="og:url" content="{{$file->link}}"/>--}}
 @endsection
 
 @section('content')
