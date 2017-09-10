@@ -4,7 +4,7 @@
     <meta name="twitter:card" content="summary"/>
     <meta name="twitter:site" content="@ShotSaver"/>
     <meta name="twitter:title" content="ShotSaver Image"/>
-    <meta name="twitter:description" content="No Description."/>
+    <meta name="twitter:description" content="An image uploaded to ShotSaver by {{$file->user->name}}"/>
     <meta name="twitter:image" content="{{$file->link}}"/>
 
     <meta content="article" property="og:type"/>
