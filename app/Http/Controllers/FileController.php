@@ -15,8 +15,9 @@ class FileController extends Controller
 		}
 
 		return view('upload', [
-			'file' => $file,
-			'type' => $file->fileType(),
+			'file'       => $file,
+			'type'       => $file->fileType(),
+			'dimensions' => $file->dimensions(),
 		]);
 	}
 }

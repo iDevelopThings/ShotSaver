@@ -7,6 +7,21 @@
     <meta name="twitter:description" content="No Description."/>
     <meta name="twitter:image" content="{{$file->link}}"/>
 
+    <meta content="article" property="og:type"/>
+    <meta content="{{request()->fullUrl()}}" property="og:url"/>
+    <meta content="{{$file->link}}" property="og:image"/>
+    @if($dimensions != null)
+        <meta content="{{$dimensions['width']}}" property="og:image:width"/>
+        <meta content="{{$dimensions['height']}}" property="og:image:height"/>
+    @endif
+    <meta content=" " property="og:description"/>
+    <link href="{{$file->link}}" rel="image_src"/>
+    <meta content="summary_large_image" name="twitter:card"/>
+    <meta content="@ShotSaver" name="twitter:site"/>
+    <meta content="ShotSaver" name="twitter:title"/>
+    <meta content="An image uploaded to ShotSaver by {{$file->user->name}}" name="twitter:description"/>
+    <meta content="{{$file->link}}" name="twitter:image"/>
+
     {{--<meta property="og:image" content="{{$file->link}}">
     <meta property="og:url" content="{{$file->link}}"/>--}}
 @endsection

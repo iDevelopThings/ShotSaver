@@ -3,11 +3,18 @@
 namespace App\Models;
 
 use App\Helpers\FileValidation;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
+use function public_path;
 
 class FileUploads extends Model
 {
 	protected $guarded = ['id'];
+
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
 
 	public function size($type = 'mb')
 	{
@@ -21,6 +28,20 @@ class FileUploads extends Model
 		}
 
 		return round($this->size_in_bytes, 2);
+	}
+
+	public function dimensions()
+	{
+		if ($this->fileType() != 'image') {
+			return null;
+		}
+
+		$size = getimagesize(public_path() . '/uploads/' . $this->file);
+
+		return [
+			'width'  => $size[0],
+			'height' => $size[1],
+		];
 	}
 
 	public function fileType()
