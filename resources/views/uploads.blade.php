@@ -36,7 +36,7 @@
                         <div class="col-md-3">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    Type <strong>{{$upload->type}}</strong>
+                                    Type <strong>{{ucfirst($upload->fileType())}}</strong>
                                 </div>
 								<?php
 								$isImage = false;
@@ -47,7 +47,7 @@
                                     <div class="image-preview" style="background-image: url('{{$upload->link}}');">
                                         <div>
                                             <div class="preview">
-                                                <a href="{{$upload->link}}" target="_blank"><i
+                                                <a href="{{$upload->link()}}" target="_blank"><i
                                                             class="fa fa-external-link"></i></a>
                                             </div>
                                         </div>
@@ -63,7 +63,7 @@
                                         </li>
                                         @if(!$isImage)
                                             <li>
-                                                Link <a href="{{$upload->link}}" target="_blank"><i
+                                                Link <a href="{{$upload->link()}}" target="_blank"><i
                                                             class="fa fa-external-link"></i> {{str_limit($upload->link, 20)}}
                                                 </a>
                                             </li>

@@ -27,4 +27,9 @@ class FileUploads extends Model
 	{
 		return app(FileValidation::class)->fileType($this->mime_type);
 	}
+
+	public function link()
+	{
+		return route('file', $this->name);
+	}
 }

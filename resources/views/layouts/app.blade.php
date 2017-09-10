@@ -17,11 +17,12 @@
     <!-- Scripts -->
     <script>
 		window.Laravel = <?php echo json_encode([
-            'csrfToken' => csrf_token(),
-        ]); ?>
+			'csrfToken' => csrf_token(),
+		]); ?>
     </script>
 
     @yield('css')
+    @yield('meta')
 </head>
 <body>
 <div id="app">

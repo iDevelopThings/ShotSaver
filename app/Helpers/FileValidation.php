@@ -27,6 +27,18 @@ class FileValidation
 			case strstr($mimeType, "text/"):
 				return "text";
 				break;
+			case strstr($mimeType, "application/x-7z-compressed"):
+				return "compressed";
+				break;
+			case strstr($mimeType, "application/x-rar-compressed"):
+				return "compressed";
+				break;
+			case strstr($mimeType, "application/x-gtar"):
+				return "compressed";
+				break;
+			case strstr($mimeType, "application/zip"):
+				return "compressed";
+				break;
 		}
 
 		return null;
