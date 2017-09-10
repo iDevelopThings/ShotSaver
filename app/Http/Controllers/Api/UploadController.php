@@ -30,7 +30,7 @@ class UploadController extends Controller
 				'name'          => $randStr,
 				'file'          => $fileName,
 				'link'          => url('/uploads/' . $fileName),
-				'size_in_bytes' => $file->getSize(),
+				'size_in_bytes' => filesize(public_path() . '/uploads/' . $fileName),
 			]);
 
 			return url('/uploads/' . $fileName);
