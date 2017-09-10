@@ -83,16 +83,19 @@
                                 </button>
                             </li>
                         </ul>
-                        @if($type === 'video')
-                            <ul class="list-inline text-muted">
+                        <ul class="list-inline text-muted">
+                            @if($type === 'video')
                                 <li>
                                     Length <strong>{{$dimensions['length']}}</strong>
                                 </li>
                                 <li>
                                     FPS <strong>{{$dimensions['fps']}}</strong>
                                 </li>
-                            </ul>
-                        @endif
+                            @endif
+                            <li>Width <strong>{{$dimensions['width']}}</strong></li>
+                            <li>Height <strong>{{$dimensions['height']}}</strong></li>
+                            <li>File Size(MB) <strong>{{$file->size()}}</strong></li>
+                        </ul>
                         <hr>
 
                         <div class="form-group">
