@@ -40,7 +40,7 @@ class UpdateSpaceUsed extends Command
 	{
 		$uploads = FileUploads::all();
 		foreach ($uploads as $upload) {
-			$upload->size_in_bytes = filesize($upload->link);
+			$upload->size_in_bytes = filesize(url('/uploads/' . $upload->file));
 		}
 	}
 }
