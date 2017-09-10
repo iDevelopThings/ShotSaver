@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('meta')
-    <meta name="twitter:card" content="summary"/>
 
     <meta content="article" property="og:type"/>
     <meta content="{{request()->fullUrl()}}" property="og:url"/>
     @if($type == 'image')
+        <meta name="twitter:card" content="summary"/>
         <meta content="{{$file->link}}" property="og:image"/>
         <link href="{{$file->link}}" rel="image_src"/>
         <meta content="summary_large_image" name="twitter:card"/>
@@ -15,10 +15,16 @@
             <meta content="{{$dimensions['height']}}" property="og:image:height"/>
         @endif
     @elseif($type == 'video')
+        <meta name="twitter:card" content="player"/>
+        <meta name="twitter:player" content="{{$file->link}}"/>
         <meta content="{{$file->link}}" property="og:video"/>
         <link href="{{$file->link}}" rel="video_src"/>
         <meta content="summary_large_video" name="twitter:card"/>
         <meta content="{{$file->link}}" name="twitter:video"/>
+        <meta content="{{$dimensions['width']}}" property="og:image:width"/>
+        <meta content="{{$dimensions['height']}}" property="og:image:height"/>
+        <meta content="{{$dimensions['width']}}" property="twitter:player:width"/>
+        <meta content="{{$dimensions['height']}}" property="twitter:player:height"/>
     @endif
     <meta content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" property="og:description"/>
     <meta content="@ShotSaver" name="twitter:site"/>
@@ -62,7 +68,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <ul class="list-inline" style="font-size: 22px;">
+                        <ul class="list-inline clearfix" style="font-size: 22px;">
                             <li>
                                 File Type <strong>{{ucfirst($type)}}</strong>
                             </li>
@@ -75,6 +81,16 @@
                                 </button>
                             </li>
                         </ul>
+                        @if($type === 'video')
+                            <ul class="list-inline text-muted">
+                                <li>
+                                    Length <strong>{{$dimensions['length']}}</strong>
+                                </li>
+                                <li>
+                                    FPS <strong>{{$dimensions['fps']}}</strong>
+                                </li>
+                            </ul>
+                        @endif
                         <hr>
 
                         <div class="form-group">

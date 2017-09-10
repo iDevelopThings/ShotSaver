@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helpers\FileValidation;
 use App\User;
+use getID3;
 use Illuminate\Database\Eloquent\Model;
 use function public_path;
 
@@ -32,16 +33,28 @@ class FileUploads extends Model
 
 	public function dimensions()
 	{
-		if ($this->fileType() != 'image') {
-			return null;
+		if ($this->fileType() == 'image') {
+			$size = getimagesize(public_path() . '/uploads/' . $this->file);
+
+			return [
+				'width'  => $size[0],
+				'height' => $size[1],
+			];
 		}
 
-		$size = getimagesize(public_path() . '/uploads/' . $this->file);
+		if ($this->fileType() == 'video') {
+			$id      = new getid3;
+			$analyze = $id->analyze(public_path() . '/uploads/' . $this->file);
 
-		return [
-			'width'  => $size[0],
-			'height' => $size[1],
-		];
+			return [
+				'width'  => $analyze['video']['resolution_x'],
+				'height' => $analyze['video']['resolution_y'],
+				'fps'    => $analyze['video']['frame_rate'],
+				'length' => $analyze['playtime_string'],
+			];
+		}
+
+		return null;
 	}
 
 	public function fileType()
