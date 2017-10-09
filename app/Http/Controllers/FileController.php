@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FileUploads;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FileController extends Controller
 {
