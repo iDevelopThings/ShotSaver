@@ -24,4 +24,5 @@ Route::get('file/{file}', 'FileController@viewFile')->name('file');
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/home', 'HomeController@index');
 	Route::get('/myuploads', 'FileController@uploads');
+    Route::post('file/{file}/description', 'FileController@addFileDescription')->name('addFileDescription');
 });
