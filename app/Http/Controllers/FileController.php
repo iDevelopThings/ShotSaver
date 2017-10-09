@@ -35,17 +35,17 @@ class FileController extends Controller
 
     public function addFileDescription(Request $request, $file)
     {
-        $file = FileUploads::where('name', $file)->first();
+        $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
         if (!$file) {
             abort(404);
         }
         if ($request->has('description')) {
             $file->description = $request->description;
             $file->save();
-            $request->session()->flash('success','File description added');
+            $request->session()->flash('success', 'File description added');
             return redirect()->back();
         }
-        $request->session()->flash('failure','Failed to add description');
+        $request->session()->flash('failure', 'Failed to add description');
         return redirect()->back();
     }
 }
