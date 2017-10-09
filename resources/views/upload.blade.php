@@ -36,7 +36,6 @@
 @endsection
 
 @section('content')
-
     <div class="file-upload">
         <div class="file-container">
             <div class="container-fluid">
@@ -57,9 +56,9 @@
                             <audio src="{{$file->link}}" style="width: 100%;" controls="true"></audio>
                         @elseif($type === 'compressed')
                             <div class="text-center">
-                                <button class="btn btn-lg btn-primary">
-                                    <i class="fa fa-download"></i> Download
-                                </button>
+                                <a href="{{$file->link}}" class="btn btn-lg btn-primary" download>
+                                    <i class="fa fa-download"></i> Download File
+                                </a>
                             </div>
                         @endif
                     </div>
@@ -70,6 +69,12 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
+                        @if (Session::has('success'))
+                            <div class="alert alert-success">{!! Session::get('success') !!}</div>
+                        @endif
+                        @if (Session::has('failure'))
+                            <div class="alert alert-danger">{!! Session::get('failure') !!}</div>
+                        @endif
                         <ul class="list-inline clearfix" style="font-size: 22px;">
                             <li>
                                 File Type <strong>{{ucfirst($type)}}</strong>
@@ -78,9 +83,9 @@
                                 Uploaded <strong>{{$file->created_at->diffForHumans()}}</strong>
                             </li>
                             <li class="pull-right">
-                                <button class="btn btn-primary">
+                                <a href="{{$file->link}}" class="btn btn-primary" download>
                                     <i class="fa fa-download"></i> Download File
-                                </button>
+                                </a>
                             </li>
                         </ul>
                         <ul class="list-inline text-muted">
@@ -98,12 +103,25 @@
                         </ul>
                         <hr>
 
-                        <div class="form-group">
+                        @if(!isset($file->description))
+                            @if(Auth::check() && Auth::user()->id == $file->user->id)
+                                <form method="POST" action="{{route('addFileDescription', $file->name)}}">
+                                    {{csrf_field() }}
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea name="description" id="description" rows="2" style="resize: vertical;"
+                                                  placeholder="Add a description for this file"
+                                                  class="form-control" maxlength="255"></textarea>
+                                    </div>
+                                    <button class="btn btn-success pull-right">
+                                        <i class="fa fa-header"></i> Add Description
+                                    </button>
+                                </form>
+                            @endif
+                        @else
                             <label for="description">Description</label>
-                            <textarea name="description" id="description"
-                                      placeholder="Add a description for this file" class="form-control"></textarea>
-                        </div>
-
+                            <p style="word-wrap: break-word ">{{$file->description}}</p>
+                        @endif
                     </div>
                 </div>
             </div>

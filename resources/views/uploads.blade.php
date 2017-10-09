@@ -72,6 +72,9 @@
                                                      </li>
                                                  @endif--}}
                                             </ul>
+                                            @if(isset($upload->name))
+                                                <p style="word-wrap: break-word ">{{$upload->description}}</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
