@@ -24,5 +24,10 @@ Route::get('file/{file}', 'FileController@viewFile')->name('file');
 Route::group(['middleware' => ['auth']], function () {
 	Route::get('/home', 'HomeController@index');
 	Route::get('/myuploads', 'FileController@uploads');
-    Route::post('file/{file}/description', 'FileController@addFileDescription')->name('addFileDescription');
+    Route::group(['prefix' => 'file/{file}/'], function (){
+        Route::post('description', 'FileController@addFileDescription')->name('addFileDescription');
+        Route::post('view-edit-description', 'FileController@viewEditDescription')->name('viewEditFileDescription');
+        Route::post('update-description', 'FileController@editDescription')->name('updateFileDescription');
+        Route::post('remove-description', 'FileController@removeDescription')->name('removeFileDescription');
+    });
 });
