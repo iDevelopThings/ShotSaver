@@ -49,4 +49,45 @@ class FileController extends Controller
         $request->session()->flash('failure', 'Failed to add description');
         return redirect()->back();
     }
+
+    public function viewEditDescription(Request $request, $file)
+    {
+        $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
+        if (!$file) {
+            abort(404);
+        }
+        $request->session()->flash('edit_description', '');
+        return redirect()->back();
+    }
+
+    public function editDescription(Request $request, $file)
+    {
+        $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
+        if (!$file) {
+            abort(404);
+        }
+        if ($request->has('description')) {
+            $file->description = $request->description;
+            $file->save();
+            $request->session()->flash('success', 'File description updated');
+            return redirect()->back();
+        }
+        $request->session()->flash('failure', 'Failed to update description');
+        return redirect()->back();
+    }
+
+    public function removeDescription(Request $request, $file)
+    {
+        $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
+        if (!$file) {
+            abort(404);
+        }
+        $file->description = null;
+        if ($file->save()) {
+            $request->session()->flash('success', 'File description removed');
+            return redirect()->back();
+        }
+        $request->session()->flash('failure', 'Failed to remove description');
+        return redirect()->back();
+    }
 }

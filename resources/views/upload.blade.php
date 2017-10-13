@@ -119,8 +119,38 @@
                                 </form>
                             @endif
                         @else
-                            <label for="description">Description</label>
-                            <p style="word-wrap: break-word ">{{$file->description}}</p>
+                            @if(Session::has('edit_description'))
+                                    <form method="POST" action="{{route('updateFileDescription', $file->name)}}">
+                                        {{csrf_field() }}
+                                        <div class="form-group">
+                                            <label for="description">Description</label>
+                                            <textarea name="description" id="description" rows="2" style="resize: vertical;"
+                                                      placeholder="Add a description for this file"
+                                                      class="form-control" maxlength="255">{{$file->description}}</textarea>
+                                        </div>
+                                        <button class="btn btn-success pull-right">
+                                            <i class="fa fa-edit"></i> Update Description
+                                        </button>
+                                    </form>
+                            @else
+                                <label for="description">Description</label>
+                                <p style="word-wrap: break-word ">{{$file->description}}</p>
+                                @if(Auth::check() && Auth::user()->id == $file->user->id)
+                                        <form method="POST" action="{{route('viewEditFileDescription', $file->name)}}">
+                                            {{csrf_field() }}
+                                            <button class="btn btn-warning pull-right">
+                                                <i class="fa fa-pencil"></i> Edit Description
+                                            </button>
+                                        </form>
+                                        <form method="POST" action="{{route('removeFileDescription', $file->name)}}">
+                                            {{csrf_field() }}
+                                            <button class="btn btn-danger pull-right" style="margin-right: 10px;">
+                                                <i class="fa fa-trash"></i> Remove Description
+                                            </button>
+                                        </form>
+
+                                @endif
+                            @endif
                         @endif
                     </div>
                 </div>
