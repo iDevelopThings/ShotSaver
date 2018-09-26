@@ -8,6 +8,14 @@ use Illuminate\Support\Facades\Auth;
 
 class FileController extends Controller
 {
+
+    /**
+     * View a file on the website
+     *
+     * @param $file
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function viewFile($file)
     {
         $file = FileUploads::where('name', $file)->first();
@@ -22,6 +30,13 @@ class FileController extends Controller
         ]);
     }
 
+    /**
+     * View my uploads
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function uploads(Request $request)
     {
         $uploads = $request->user()->uploads()->orderBy('id', 'DESC')->paginate(20);
@@ -34,6 +49,14 @@ class FileController extends Controller
         ]);
     }
 
+    /**
+     * Add a description to a file
+     *
+     * @param Request $request
+     * @param         $file
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function addFileDescription(Request $request, $file)
     {
         $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
@@ -50,6 +73,14 @@ class FileController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Begin editing a file description
+     *
+     * @param Request $request
+     * @param         $file
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function viewEditDescription(Request $request, $file)
     {
         $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
@@ -60,6 +91,14 @@ class FileController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Save a new file description
+     *
+     * @param Request $request
+     * @param         $file
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function editDescription(Request $request, $file)
     {
         $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
@@ -76,6 +115,14 @@ class FileController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Remove a file description
+     *
+     * @param Request $request
+     * @param         $file
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function removeDescription(Request $request, $file)
     {
         $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
