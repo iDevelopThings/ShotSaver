@@ -60,7 +60,7 @@ class FileUploads extends Model
     {
         if ($this->fileType() == 'image') {
             return cache()->remember('image-dimensions:' . $this->id, 60 * 24, function () {
-                $size = getimagesize(public_path() . '/uploads/' . $this->file);
+                $size = getimagesize($this->link);
 
                 return [
                     'width'  => $size[0],
@@ -73,7 +73,7 @@ class FileUploads extends Model
         if ($this->fileType() == 'video') {
             return cache()->remember('video-dimensions:' . $this->id, 60 * 24, function () {
                 $id      = new getid3;
-                $analyze = $id->analyze(public_path() . '/uploads/' . $this->file);
+                $analyze = $id->analyze($this->link);
 
                 return [
                     'width'  => $analyze['video']['resolution_x'],
