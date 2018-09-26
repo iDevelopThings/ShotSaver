@@ -16,9 +16,9 @@
           integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <!-- Scripts -->
     <script>
-		window.Laravel = <?php echo json_encode([
-			'csrfToken' => csrf_token(),
-		]); ?>
+        window.Laravel = <?php echo json_encode([
+            'csrfToken' => csrf_token(),
+        ]); ?>
     </script>
 
     @yield('css')
@@ -52,6 +52,7 @@
                     @else
                         <li><a href="{{ url('/home') }}">Home</a></li>
                         <li><a href="{{ url('/myuploads') }}">My Uploads</a></li>
+                        <li><a href="{{ url('/favourites') }}">My Favourites</a></li>
                     @endif
                 </ul>
 

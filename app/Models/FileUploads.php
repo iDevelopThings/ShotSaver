@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Favourite;
 use App\Helpers\FileValidation;
 use App\User;
 use function file_get_contents;
@@ -98,5 +99,33 @@ class FileUploads extends Model
     public function link()
     {
         return route('file', $this->name);
+    }
+
+    /**
+     * Allow the authed user to "favourite" a file
+     *
+     * @return bool
+     */
+    public function favourite()
+    {
+        $favourite = Favourite::where('user_id', auth()->id())
+            ->where('favourable_id', $this->id)
+            ->where('favourable_type', FileUploads::class)
+            ->first();
+
+        if ($favourite !== null) {
+            $favourite->delete();
+
+            return true;
+        } else {
+            $favourite                  = new Favourite;
+            $favourite->user_id         = auth()->id();
+            $favourite->favourable_id   = $this->id;
+            $favourite->favourable_type = FileUploads::class;
+            $favourite->save();
+
+            return true;
+        }
+
     }
 }

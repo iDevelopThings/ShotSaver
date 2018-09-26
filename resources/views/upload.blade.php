@@ -2,36 +2,36 @@
 
 @section('meta')
 
-    <meta content="article" property="og:type"/>
-    <meta content="{{request()->fullUrl()}}" property="og:url"/>
+    <meta content="article" property="og:type" />
+    <meta content="{{request()->fullUrl()}}" property="og:url" />
     @if($type == 'image')
-        <meta name="twitter:card" content="summary"/>
-        <meta content="{{$file->link}}" property="og:image"/>
-        <link href="{{$file->link}}" rel="image_src"/>
-        <meta content="summary_large_image" name="twitter:card"/>
-        <meta content="{{$file->link}}" name="twitter:image"/>
+        <meta name="twitter:card" content="summary" />
+        <meta content="{{$file->link}}" property="og:image" />
+        <link href="{{$file->link}}" rel="image_src" />
+        <meta content="summary_large_image" name="twitter:card" />
+        <meta content="{{$file->link}}" name="twitter:image" />
         @if($dimensions != null)
-            <meta content="{{$dimensions['width']}}" property="og:image:width"/>
-            <meta content="{{$dimensions['height']}}" property="og:image:height"/>
+            <meta content="{{$dimensions['width']}}" property="og:image:width" />
+            <meta content="{{$dimensions['height']}}" property="og:image:height" />
         @endif
     @elseif($type == 'video')
-        <meta name="twitter:card" content="player"/>
-        <meta name="twitter:player" content="{{$file->link}}"/>
-        <meta content="{{$file->link}}" property="og:video"/>
-        <link href="{{$file->link}}" rel="video_src"/>
-        <meta content="summary_large_video" name="twitter:card"/>
-        <meta content="{{$file->mime_type}}" name="twitter:player:stream:content_type"/>
-        <meta content="{{$type}}" name="twitter:player:stream"/>
-        <meta content="{{$file->link}}" name="twitter:video"/>
-        <meta content="{{$dimensions['width']}}" property="og:image:width"/>
-        <meta content="{{$dimensions['height']}}" property="og:image:height"/>
-        <meta content="{{$dimensions['width']}}" property="twitter:player:width"/>
-        <meta content="{{$dimensions['height']}}" property="twitter:player:height"/>
+        <meta name="twitter:card" content="player" />
+        <meta name="twitter:player" content="{{$file->link}}" />
+        <meta content="{{$file->link}}" property="og:video" />
+        <link href="{{$file->link}}" rel="video_src" />
+        <meta content="summary_large_video" name="twitter:card" />
+        <meta content="{{$file->mime_type}}" name="twitter:player:stream:content_type" />
+        <meta content="{{$type}}" name="twitter:player:stream" />
+        <meta content="{{$file->link}}" name="twitter:video" />
+        <meta content="{{$dimensions['width']}}" property="og:image:width" />
+        <meta content="{{$dimensions['height']}}" property="og:image:height" />
+        <meta content="{{$dimensions['width']}}" property="twitter:player:width" />
+        <meta content="{{$dimensions['height']}}" property="twitter:player:height" />
     @endif
-    <meta content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" property="og:description"/>
-    <meta content="@ShotSaver" name="twitter:site"/>
-    <meta content="ShotSaver" name="twitter:title"/>
-    <meta content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" name="twitter:description"/>
+    <meta content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" property="og:description" />
+    <meta content="@ShotSaver" name="twitter:site" />
+    <meta content="ShotSaver" name="twitter:title" />
+    <meta content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" name="twitter:description" />
 
 @endsection
 
@@ -87,6 +87,26 @@
                                     <i class="fa fa-download"></i> Download File
                                 </a>
                             </li>
+                            <li class="pull-right">
+                                <form action="{{route('favourite', $file->name)}}" method="post">
+                                    {!! csrf_field() !!}
+                                    <?php
+                                    $hasFavourited = auth()->user()->favourites()
+                                        ->where('favourable_id', $file->id)
+                                        ->where('favourable_type', \App\Models\FileUploads::class)
+                                        ->first();
+                                    ?>
+                                    @if(!$hasFavourited)
+                                        <button class="btn btn-default">
+                                            <i class="fa fa-heart"></i> Favourite file
+                                        </button>
+                                    @else
+                                        <button class="btn btn-danger">
+                                            <i class="fa fa-heart"></i> Un favourite file
+                                        </button>
+                                    @endif
+                                </form>
+                            </li>
                         </ul>
                         <ul class="list-inline text-muted">
                             @if($type === 'video')
@@ -120,34 +140,34 @@
                             @endif
                         @else
                             @if(Session::has('edit_description'))
-                                    <form method="POST" action="{{route('updateFileDescription', $file->name)}}">
-                                        {{csrf_field() }}
-                                        <div class="form-group">
-                                            <label for="description">Description</label>
-                                            <textarea name="description" id="description" rows="2" style="resize: vertical;"
-                                                      placeholder="Add a description for this file"
-                                                      class="form-control" maxlength="255">{{$file->description}}</textarea>
-                                        </div>
-                                        <button class="btn btn-success pull-right">
-                                            <i class="fa fa-edit"></i> Update Description
-                                        </button>
-                                    </form>
+                                <form method="POST" action="{{route('updateFileDescription', $file->name)}}">
+                                    {{csrf_field() }}
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea name="description" id="description" rows="2" style="resize: vertical;"
+                                                  placeholder="Add a description for this file"
+                                                  class="form-control" maxlength="255">{{$file->description}}</textarea>
+                                    </div>
+                                    <button class="btn btn-success pull-right">
+                                        <i class="fa fa-edit"></i> Update Description
+                                    </button>
+                                </form>
                             @else
                                 <label for="description">Description</label>
                                 <p style="word-wrap: break-word ">{{$file->description}}</p>
                                 @if(Auth::check() && Auth::user()->id == $file->user->id)
-                                        <form method="POST" action="{{route('viewEditFileDescription', $file->name)}}">
-                                            {{csrf_field() }}
-                                            <button class="btn btn-warning pull-right">
-                                                <i class="fa fa-pencil"></i> Edit Description
-                                            </button>
-                                        </form>
-                                        <form method="POST" action="{{route('removeFileDescription', $file->name)}}">
-                                            {{csrf_field() }}
-                                            <button class="btn btn-danger pull-right" style="margin-right: 10px;">
-                                                <i class="fa fa-trash"></i> Remove Description
-                                            </button>
-                                        </form>
+                                    <form method="POST" action="{{route('viewEditFileDescription', $file->name)}}">
+                                        {{csrf_field() }}
+                                        <button class="btn btn-warning pull-right">
+                                            <i class="fa fa-pencil"></i> Edit Description
+                                        </button>
+                                    </form>
+                                    <form method="POST" action="{{route('removeFileDescription', $file->name)}}">
+                                        {{csrf_field() }}
+                                        <button class="btn btn-danger pull-right" style="margin-right: 10px;">
+                                            <i class="fa fa-trash"></i> Remove Description
+                                        </button>
+                                    </form>
 
                                 @endif
                             @endif

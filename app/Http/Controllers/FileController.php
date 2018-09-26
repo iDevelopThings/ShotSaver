@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FileUploads;
+use Faker\Provider\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,8 +25,8 @@ class FileController extends Controller
         }
 
         return view('upload', [
-            'file' => $file,
-            'type' => $file->fileType(),
+            'file'       => $file,
+            'type'       => $file->fileType(),
             'dimensions' => $file->dimensions(),
         ]);
     }
@@ -39,12 +40,12 @@ class FileController extends Controller
      */
     public function uploads(Request $request)
     {
-        $uploads = $request->user()->uploads()->orderBy('id', 'DESC')->paginate(20);
+        $uploads   = $request->user()->uploads()->orderBy('id', 'DESC')->paginate(20);
         $spaceUsed = $request->user()->spaceUsed();
 
         return view('uploads', [
-            'uploads' => $uploads,
-            'spaceUsed' => $spaceUsed,
+            'uploads'      => $uploads,
+            'spaceUsed'    => $spaceUsed,
             'uploadsCount' => $request->user()->uploads()->count(),
         ]);
     }
@@ -67,9 +68,11 @@ class FileController extends Controller
             $file->description = $request->description;
             $file->save();
             $request->session()->flash('success', 'File description added');
+
             return redirect()->back();
         }
         $request->session()->flash('failure', 'Failed to add description');
+
         return redirect()->back();
     }
 
@@ -88,6 +91,7 @@ class FileController extends Controller
             abort(404);
         }
         $request->session()->flash('edit_description', '');
+
         return redirect()->back();
     }
 
@@ -109,9 +113,11 @@ class FileController extends Controller
             $file->description = $request->description;
             $file->save();
             $request->session()->flash('success', 'File description updated');
+
             return redirect()->back();
         }
         $request->session()->flash('failure', 'Failed to update description');
+
         return redirect()->back();
     }
 
@@ -132,9 +138,47 @@ class FileController extends Controller
         $file->description = null;
         if ($file->save()) {
             $request->session()->flash('success', 'File description removed');
+
             return redirect()->back();
         }
         $request->session()->flash('failure', 'Failed to remove description');
+
         return redirect()->back();
+    }
+
+    /**
+     * Favourite a file
+     *
+     * @param Request $request
+     * @param         $file
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function favourite(Request $request, $file)
+    {
+        $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
+        if (!$file) {
+            abort(404);
+        }
+
+        $file->favourite();
+
+        return redirect()->back();
+    }
+
+    /**
+     * Allow the user to view all their favourites
+     *
+     * @param Request $request
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function favourites(Request $request)
+    {
+        $favourites = auth()->user()->favourites()->with('favourable')->paginate(20);
+
+        return view('favourites', [
+            'favourites' => $favourites,
+        ]);
     }
 }
