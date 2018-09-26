@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helpers\FileValidation;
 use App\User;
+use function file_get_contents;
 use getID3;
 use Illuminate\Database\Eloquent\Model;
 use function public_path;
@@ -70,10 +71,12 @@ class FileUploads extends Model
 
         }
 
-        if ($this->fileType() == 'video') {
+        /*if ($this->fileType() == 'video') {
             return cache()->remember('video-dimensions:' . $this->id, 60 * 24, function () {
                 $id      = new getid3;
-                $analyze = $id->analyze($this->link);
+                $analyze = $id->analyze(file_get_contents($this->link));
+
+                dd($analyze);
 
                 return [
                     'width'  => $analyze['video']['resolution_x'],
@@ -82,7 +85,7 @@ class FileUploads extends Model
                     'length' => $analyze['playtime_string'],
                 ];
             });
-        }
+        }*/
 
         return null;
     }
