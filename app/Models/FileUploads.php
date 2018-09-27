@@ -101,6 +101,11 @@ class FileUploads extends Model
         return route('file', $this->name);
     }
 
+    public function favourites()
+    {
+        return $this->hasMany(Favourite::class, 'favourable_id', 'id')->where('favourable_type', FileUploads::class);
+    }
+
     /**
      * Allow the authed user to "favourite" a file
      *

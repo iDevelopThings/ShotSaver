@@ -116,10 +116,14 @@
                                         @endif
                                     </form>
                                 @endif
+                                <?php $faves = $file->favourites()->count(); ?>
+                                <small style="font-size: 13px;">
+                                    Favourited by <strong>{{$faves}}</strong> other{{$faves === 1 ? '' : '\'s'}}
+                                </small>
                             </li>
                         </ul>
                         <ul class="list-inline text-muted">
-                            @if($type === 'video')
+                            {{--@if($type === 'video')
                                 <li>
                                     Length <strong>{{$dimensions['length']}}</strong>
                                 </li>
@@ -128,7 +132,7 @@
                                 </li>
                             @endif
                             <li>Width <strong>{{$dimensions['width']}}</strong></li>
-                            <li>Height <strong>{{$dimensions['height']}}</strong></li>
+                            <li>Height <strong>{{$dimensions['height']}}</strong></li>--}}
                             <li>File Size(MB) <strong>{{$file->size()}}</strong></li>
                         </ul>
                         <hr>
