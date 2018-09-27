@@ -8,6 +8,7 @@ use Faker\Provider\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use function in_array;
 use League\Flysystem\FileNotFoundException;
 
 class FileController extends Controller
@@ -43,7 +44,31 @@ class FileController extends Controller
      */
     public function uploads(Request $request)
     {
-        $uploads   = $request->user()->uploads()->orderBy('id', 'DESC')->paginate(20);
+        //Its helpful to make sure we always know what page we're on
+        if (!$request->has('page')) {
+            return redirect()->route('my-uploads', ['page' => 1]);
+        }
+
+
+        $uploads = $request->user()
+            ->uploads();
+
+        $filters = ['created_at', 'size_in_bytes', 'mime_type'];
+        $orders  = ['desc', 'asc'];
+        $filter  = 'id';
+        $order   = 'desc';
+
+        if ($request->has('filter_by') && in_array($request->filter_by, $filters)) {
+            $filter = $request->filter_by;
+        }
+        if ($request->has('order') && in_array($request->order, $orders)) {
+            $order = $request->order;
+        }
+
+        $uploads = $uploads->orderBy($filter, $order)
+            ->paginate(20);
+
+
         $spaceUsed = $request->user()->spaceUsed();
 
         return view('uploads', [

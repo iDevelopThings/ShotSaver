@@ -5,6 +5,7 @@
 
         <div class="row">
             <div class="col-md-3">
+
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <h1 class="text-center">
@@ -35,6 +36,14 @@
                         </h1>
                     </div>
                 </div>
+
+                <my-uploads-filter
+                        page="{{request('page', 1)}}"
+                        url="{{route('my-uploads')}}"
+                        current-filter="{{request('filter_by', 'created_at')}}"
+                        current-order="{{request('order', 'desc')}}"
+                ></my-uploads-filter>
+
             </div>
             <div class="col-md-9">
 
@@ -45,67 +54,32 @@
                     <div class="alert alert-danger">{!! Session::get('failure') !!}</div>
                 @endif
 
-                @if($uploads->count())
-                    @foreach($uploads->chunk(4) as $chunk)
-                        <div class="row">
-                            @foreach($chunk as $upload)
-                                <div class="col-md-3">
-                                    <div class="panel panel-default">
-                                        <div class="panel-heading clearfix">
-                                            <div class="pull-left">
-                                                Type <strong>{{ucfirst($upload->fileType())}}</strong>
-                                            </div>
+                <?php $count = $uploads->count(); ?>
+                @if($count)
+                    @if($count > 4)
 
-                                            <div class="pull-right">
-                                                <form onsubmit="return confirm('Are you sure you wish to delete this file?')"
-                                                      action="{{route('delete', ['file' => $upload->name, 'page' => request('page', 1)])}}"
-                                                      method="post">
-                                                    {!! csrf_field() !!}
-                                                    <button class="btn btn-danger btn-xs">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="image-preview"
-                                             style="background-image: url('{{$upload->previewImage()}}');">
-                                            <div>
-                                                <div class="preview">
-                                                    <a href="{{$upload->link()}}" target="_blank">
-                                                        <i class="fa fa-external-link"></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <ul class="list-inline list-unstyled">
-                                                <li>
-                                                    Size <strong>{{$upload->size()}}</strong> MB
-                                                </li>
-                                                <li>
-                                                    Uploaded <strong>{{$upload->created_at->diffForHumans()}}</strong>
-                                                </li>
-                                                {{-- @if(!$isImage)
-                                                     <li>
-                                                         Link <a href="{{$upload->link()}}" target="_blank"><i
-                                                                     class="fa fa-external-link"></i> {{str_limit($upload->link, 20)}}
-                                                         </a>
-                                                     </li>
-                                                 @endif--}}
-                                            </ul>
-                                            @if(isset($upload->name))
-                                                <p style="word-wrap: break-word ">{{$upload->description}}</p>
-                                            @endif
-                                        </div>
+                        @foreach($uploads->chunk(4) as $chunk)
+                            <div class="row">
+                                @foreach($chunk as $upload)
+                                    <div class="col-md-3">
+                                        @include('upload-card', ['upload' => $upload])
                                     </div>
+                                @endforeach
+                            </div>
+                        @endforeach
+
+                        <div class="text-center">
+                            {!! $uploads->render() !!}
+                        </div>
+                    @else
+                        <div class="row">
+                            @foreach($uploads as $upload)
+                                <div class="col-md-3">
+                                    @include('upload-card', ['upload' => $upload])
                                 </div>
                             @endforeach
                         </div>
-                    @endforeach
-
-                    <div class="text-center">
-                        {!! $uploads->render() !!}
-                    </div>
+                    @endif
                 @else
                     <div class="panel panel-default">
                         <div class="panel-body">

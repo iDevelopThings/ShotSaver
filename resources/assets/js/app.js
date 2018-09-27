@@ -14,6 +14,7 @@ require('./bootstrap');
  */
 
 Vue.component('example', require('./components/Example.vue'));
+Vue.component('my-uploads-filter', require('./components/MyUploadsFilter.vue'));
 
 const app = new Vue({
     el: '#app'
