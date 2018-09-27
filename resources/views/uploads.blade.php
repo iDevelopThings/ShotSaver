@@ -37,14 +37,35 @@
                 </div>
             </div>
             <div class="col-md-9">
+
+                @if (Session::has('success'))
+                    <div class="alert alert-success">{!! Session::get('success') !!}</div>
+                @endif
+                @if (Session::has('failure'))
+                    <div class="alert alert-danger">{!! Session::get('failure') !!}</div>
+                @endif
+
                 @if($uploads->count())
                     @foreach($uploads->chunk(4) as $chunk)
                         <div class="row">
                             @foreach($chunk as $upload)
                                 <div class="col-md-3">
                                     <div class="panel panel-default">
-                                        <div class="panel-heading">
-                                            Type <strong>{{ucfirst($upload->fileType())}}</strong>
+                                        <div class="panel-heading clearfix">
+                                            <div class="pull-left">
+                                                Type <strong>{{ucfirst($upload->fileType())}}</strong>
+                                            </div>
+
+                                            <div class="pull-right">
+                                                <form onsubmit="return confirm('Are you sure you wish to delete this file?')"
+                                                      action="{{route('delete', ['file' => $upload->name, 'page' => request('page', 1)])}}"
+                                                      method="post">
+                                                    {!! csrf_field() !!}
+                                                    <button class="btn btn-danger btn-xs">
+                                                        <i class="fa fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                         <div class="image-preview"
                                              style="background-image: url('{{$upload->previewImage()}}');">

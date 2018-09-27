@@ -31,7 +31,7 @@ class UploadController extends Controller
             return "This file type is not allowed.";
         }
 
-        if ($fileName = Storage::disk('spaces')->putFile('', $file, 'public')) {
+        if ($fileName = Storage::disk('spaces')->putFile('ShotSaver', $file, 'public')) {
             $upload = FileUploads::create([
                 'user_id'       => $user->id,
                 'type'          => $file->getClientOriginalExtension(),

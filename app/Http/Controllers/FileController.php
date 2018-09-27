@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\FileUploads;
+use Aws\S3\Exception\S3Exception;
 use Faker\Provider\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use League\Flysystem\FileNotFoundException;
 
 class FileController extends Controller
 {
@@ -180,5 +183,27 @@ class FileController extends Controller
         return view('favourites', [
             'favourites' => $favourites,
         ]);
+    }
+
+    /**
+     * Allow the user to delete a file
+     *
+     * @param Request $request
+     * @param         $file
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function delete(Request $request, $file)
+    {
+        $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
+        if (!$file) {
+            abort(404);
+        }
+        Storage::disk('spaces')->delete($file->file);
+        $file->delete();
+
+        session()->flash('success', 'Successfully deleted file.');
+
+        return redirect(route('my-uploads', ['page' => request('page', 1)]));
     }
 }
