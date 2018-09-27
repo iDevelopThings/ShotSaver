@@ -84,7 +84,7 @@
                             </li>
                             <li class="pull-right">
                                 <a href="{{$file->link}}" class="btn btn-primary" download>
-                                    <i class="fa fa-download"></i> Download File
+                                    <i class="fa fa-download"></i> Download file
                                 </a>
                             </li>
                             <li class="pull-right">
