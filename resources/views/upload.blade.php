@@ -88,24 +88,34 @@
                                 </a>
                             </li>
                             <li class="pull-right">
-                                <form action="{{route('favourite', $file->name)}}" method="post">
-                                    {!! csrf_field() !!}
-                                    <?php
-                                    $hasFavourited = auth()->user()->favourites()
-                                        ->where('favourable_id', $file->id)
-                                        ->where('favourable_type', \App\Models\FileUploads::class)
-                                        ->first();
-                                    ?>
-                                    @if(!$hasFavourited)
-                                        <button class="btn btn-default">
-                                            <i class="fa fa-heart"></i> Favourite file
-                                        </button>
-                                    @else
-                                        <button class="btn btn-danger">
-                                            <i class="fa fa-heart"></i> Un favourite file
-                                        </button>
-                                    @endif
-                                </form>
+                                @if(auth()->guest())
+                                    <button class="btn btn-default"
+                                            disabled
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Log in or Register to favourite this file.">
+                                        <i class="fa fa-heart"></i> Favourite file
+                                    </button>
+                                @else
+                                    <form action="{{route('favourite', $file->name)}}" method="post">
+                                        {!! csrf_field() !!}
+                                        <?php
+                                        $hasFavourited = auth()->user()->favourites()
+                                            ->where('favourable_id', $file->id)
+                                            ->where('favourable_type', \App\Models\FileUploads::class)
+                                            ->first();
+                                        ?>
+                                        @if(!$hasFavourited)
+                                            <button class="btn btn-default">
+                                                <i class="fa fa-heart"></i> Favourite file
+                                            </button>
+                                        @else
+                                            <button class="btn btn-danger">
+                                                <i class="fa fa-heart"></i> Un favourite file
+                                            </button>
+                                        @endif
+                                    </form>
+                                @endif
                             </li>
                         </ul>
                         <ul class="list-inline text-muted">
