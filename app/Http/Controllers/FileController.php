@@ -24,9 +24,12 @@ class FileController extends Controller
     public function viewFile($file)
     {
         $file = FileUploads::where('name', $file)->first();
+
         if (!$file) {
             abort(404);
         }
+
+        $file->saveView();
 
         return view('upload', [
             'file'       => $file,

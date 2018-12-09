@@ -24,7 +24,6 @@ class UploadController extends Controller
 
         $file    = $request->file('d');
         $randStr = str_random();
-        //$fileName = $randStr . '.' . $file->getClientOriginalExtension();
 
         $fileType = app(FileValidation::class)->fileType($file->getClientMimeType());
         if ($fileType == null) {
@@ -32,6 +31,7 @@ class UploadController extends Controller
         }
 
         if ($fileName = Storage::disk('spaces')->putFile('ShotSaver', $file, 'public')) {
+
             $upload = FileUploads::create([
                 'user_id'       => $user->id,
                 'type'          => $file->getClientOriginalExtension(),

@@ -133,4 +133,26 @@ class FileUploads extends Model
         }
 
     }
+
+    /**
+     * All the file views for this file upload
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function views()
+    {
+        return $this->hasMany(FileView::class);
+    }
+
+    /**
+     * Save a new view for the current person viewing this file
+     */
+    public function saveView()
+    {
+        $view     = new FileView;
+        $view->ip = request()->ip();
+
+        $this->views()->save($view);
+    }
+
 }
