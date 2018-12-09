@@ -134,6 +134,7 @@
                             <li>Width <strong>{{$dimensions['width']}}</strong></li>
                             <li>Height <strong>{{$dimensions['height']}}</strong></li>--}}
                             <li>File Size(MB) <strong>{{$file->size()}}</strong></li>
+                            <li>Views <strong>{{$file->views()->count()}}</strong></li>
                         </ul>
                         <hr>
 
