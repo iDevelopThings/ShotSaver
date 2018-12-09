@@ -141,7 +141,7 @@ class FileUploads extends Model
      */
     public function views()
     {
-        return $this->hasMany(FileView::class, 'file_uploads_id');
+        return $this->hasMany(FileView::class, 'file_upload_id');
     }
 
     /**
