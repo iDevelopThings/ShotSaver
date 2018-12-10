@@ -2,7 +2,7 @@
 
 @section('meta')
 
-    <meta content="{{$file->link}}" property="og:url" />
+    <meta content="{{request()->fullUrl()}}" property="og:url" />
     @if($type == 'image')
         <meta name="twitter:card" content="summary" />
         <meta content="{{$file->link}}" property="og:image" />
@@ -14,7 +14,7 @@
             <meta content="{{$dimensions['height']}}" property="og:image:height" />
         @endif
     @elseif($type == 'video')
-        <meta content="video/mp4" property="og:type" />
+        <meta content="video.other" property="og:type" />
         <meta content="{{$file->link}}" property="og:video" />
         {{-- <meta name="twitter:card" content="player" />
          <meta name="twitter:player" content="{{$file->link}}" />
