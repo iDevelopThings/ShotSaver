@@ -49,9 +49,10 @@ class UpdateStoredFiles extends Command
             foreach ($files as $file) {
                 // $this->info('Current File: ' . $file->id);
 
-                $fileName = str_replace('ShotSaver/', '', $file->file);
+                $fileLink = str_replace('/shotsaver/ShotSaver/', '/shotsaver/', $file->link);
+                $fileName = str_replace('/ShotSaver', '', $file->name);
 
-                $fileContents = @file_get_contents($file->link);
+                /*$fileContents = @file_get_contents($file->link);
 
                 if (!$fileContents) {
                     $file->delete();
@@ -62,9 +63,10 @@ class UpdateStoredFiles extends Command
                     $fileName,
                     file_get_contents($file->link),
                     'public'
-                );
+                );*/
 
-                $file->link = Storage::cloud()->url($file->file);
+                $file->link = $fileLink;
+                $file->name = $fileName;
                 $file->save();
 
                 $bar->advance();
