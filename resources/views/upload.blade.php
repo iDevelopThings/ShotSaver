@@ -2,7 +2,7 @@
 
 @section('meta')
 
-    <meta content="{{request()->fullUrl()}}" property="og:url" />
+    <meta content="{{$file->link}}" property="og:url" />
     @if($type == 'image')
         <meta name="twitter:card" content="summary" />
         <meta content="{{$file->link}}" property="og:image" />
