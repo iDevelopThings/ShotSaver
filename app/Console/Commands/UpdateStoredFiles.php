@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\FileUploads;
 use Illuminate\Console\Command;
 use Illuminate\Http\File;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class UpdateStoredFiles extends Command
@@ -40,34 +41,38 @@ class UpdateStoredFiles extends Command
      */
     public function handle()
     {
-        $files = FileUploads::get();
+        DB::transaction(function () {
+            $files = FileUploads::get();
 
-        $bar = $this->output->createProgressBar($files->count());
+            $bar = $this->output->createProgressBar($files->count());
 
-        foreach ($files as $file) {
-            // $this->info('Current File: ' . $file->id);
+            foreach ($files as $file) {
+                // $this->info('Current File: ' . $file->id);
 
-            $fileName = str_replace('ShotSaver/', '', $file->file);
+                $fileName = str_replace('ShotSaver/', '', $file->file);
 
-            $fileContents = @file_get_contents($file->link);
+                $fileContents = @file_get_contents($file->link);
 
-            if (!$fileContents) {
-                $file->delete();
-                continue;
+                if (!$fileContents) {
+                    $file->delete();
+                    continue;
+                }
+
+                $response = Storage::cloud()->put(
+                    $fileName,
+                    file_get_contents($file->link),
+                    'public'
+                );
+
+                $file->link = Storage::cloud()->url($file->file);
+                $file->save();
+
+                $bar->advance();
             }
 
-            $response = Storage::cloud()->put(
-                $fileName,
-                file_get_contents($file->link),
-                'public'
-            );
+            $bar->finish();
+        });
 
-            $file->link = Storage::cloud()->url($file->file);
-            $file->save();
 
-            $bar->advance();
-        }
-
-        $bar->finish();
     }
 }
