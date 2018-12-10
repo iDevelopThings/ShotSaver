@@ -50,7 +50,7 @@ class UpdateStoredFiles extends Command
                 // $this->info('Current File: ' . $file->id);
 
                 //$fileLink = str_replace('/shotsaver/ShotSaver/', '/shotsaver/', $file->link);
-                $fileName = str_replace('/ShotSaver', '', $file->file);
+                $fileName = str_replace('ShotSaver/', '', $file->file);
 
                 /*$fileContents = @file_get_contents($file->link);
 
