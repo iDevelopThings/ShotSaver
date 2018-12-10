@@ -21,8 +21,10 @@
         <link href="{{$file->link}}" rel="video_src" />
         <meta content="summary_large_video" name="twitter:card" />
         <meta content="{{$file->mime_type}}" name="twitter:player:stream:content_type" />
-        <meta content="{{$type}}" name="twitter:player:stream" />
+        <meta content="{{$file->link}}" name="twitter:player:stream" />
+        <meta content="{{$file->link}}" name="twitter:player" />
         <meta content="{{$file->link}}" name="twitter:video" />
+        <meta name="twitter:player:stream:content_type" content="{{$file->mime_type}}" />
         <meta content="{{$dimensions['width']}}" property="og:image:width" />
         <meta content="{{$dimensions['height']}}" property="og:image:height" />
         <meta content="{{$dimensions['width']}}" property="twitter:player:width" />
