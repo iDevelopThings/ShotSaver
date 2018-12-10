@@ -30,7 +30,7 @@ class UploadController extends Controller
             return "This file type is not allowed.";
         }
 
-        if ($fileName = Storage::disk('spaces')->putFile('ShotSaver', $file, 'public')) {
+        if ($fileName = Storage::cloud()->putFile('', $file, 'public')) {
 
             $upload = FileUploads::create([
                 'user_id'       => $user->id,
@@ -38,7 +38,7 @@ class UploadController extends Controller
                 'name'          => $randStr,
                 'file'          => $fileName,
                 'mime_type'     => $file->getClientMimeType(),
-                'link'          => Storage::disk('spaces')->url($fileName),
+                'link'          => Storage::cloud()->url($fileName),
                 'size_in_bytes' => filesize($file->getPathname()),
             ]);
 

@@ -28,7 +28,7 @@ return [
     |
     */
 
-    'cloud' => 's3',
+    'cloud' => 'minio',
 
     /*
     |--------------------------------------------------------------------------
@@ -45,31 +45,40 @@ return [
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app'),
+            'root'   => storage_path('app'),
         ],
 
         'public' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'driver'     => 'local',
+            'root'       => storage_path('app/public'),
             'visibility' => 'public',
         ],
 
         's3' => [
             'driver' => 's3',
-            'key' => 'your-key',
+            'key'    => 'your-key',
             'secret' => 'your-secret',
             'region' => 'your-region',
             'bucket' => 'your-bucket',
         ],
 
+        'minio' => [
+            'driver'                  => 's3',
+            'endpoint'                => env('MINIO_ENDPOINT', 'http://127.0.0.1:9005'),
+            'use_path_style_endpoint' => true,
+            'key'                     => env('AWS_KEY'),
+            'secret'                  => env('AWS_SECRET'),
+            'region'                  => env('AWS_REGION'),
+            'bucket'                  => env('AWS_BUCKET'),
+        ],
 
         'spaces' => [
-            'driver' => 's3',
-            'key' => env('DO_SPACES_KEY'),
-            'secret' => env('DO_SPACES_SECRET'),
+            'driver'   => 's3',
+            'key'      => env('DO_SPACES_KEY'),
+            'secret'   => env('DO_SPACES_SECRET'),
             'endpoint' => env('DO_SPACES_ENDPOINT'),
-            'region' => env('DO_SPACES_REGION'),
-            'bucket' => env('DO_SPACES_BUCKET'),
+            'region'   => env('DO_SPACES_REGION'),
+            'bucket'   => env('DO_SPACES_BUCKET'),
         ],
     ],
 

@@ -42,15 +42,25 @@ class UpdateStoredFiles extends Command
     {
         $files = FileUploads::get();
 
+        $bar = $this->output->createProgressBar($files->count());
+
         foreach ($files as $file) {
             $this->info('Current File: ' . $file->id);
 
-            $storedFile = new File(public_path('uploads/' . $file->file));
-            $response   = Storage::disk('spaces')->putFile('', $storedFile, 'public');
+            $fileName = str_replace('ShotSaver/', '', $file->file);
 
-            $file->link = Storage::disk('spaces')->url($response);
-            $file->file = $response;
+            $response = Storage::cloud()->put(
+                $fileName,
+                file_get_contents($file->link),
+                'public'
+            );
+
+            $file->link = Storage::cloud()->url($response);
             $file->save();
+
+            $bar->advance();
         }
+
+        $bar->finish();
     }
 }
