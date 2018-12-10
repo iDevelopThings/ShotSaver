@@ -2,7 +2,6 @@
 
 @section('meta')
 
-    <meta content="article" property="og:type" />
     <meta content="{{request()->fullUrl()}}" property="og:url" />
     @if($type == 'image')
         <meta name="twitter:card" content="summary" />
@@ -15,20 +14,24 @@
             <meta content="{{$dimensions['height']}}" property="og:image:height" />
         @endif
     @elseif($type == 'video')
-        <meta name="twitter:card" content="player" />
-        <meta name="twitter:player" content="{{$file->link}}" />
+        <meta content="video/mp4" property="og:type" />
         <meta content="{{$file->link}}" property="og:video" />
-        <link href="{{$file->link}}" rel="video_src" />
-        <meta content="summary_large_video" name="twitter:card" />
-        <meta content="{{$file->mime_type}}" name="twitter:player:stream:content_type" />
-        <meta content="{{$file->link}}" name="twitter:player:stream" />
-        <meta content="{{$file->link}}" name="twitter:player" />
-        <meta content="{{$file->link}}" name="twitter:video" />
-        <meta name="twitter:player:stream:content_type" content="{{$file->mime_type}}" />
-        <meta content="{{$dimensions['width']}}" property="og:image:width" />
-        <meta content="{{$dimensions['height']}}" property="og:image:height" />
-        <meta content="{{$dimensions['width']}}" property="twitter:player:width" />
-        <meta content="{{$dimensions['height']}}" property="twitter:player:height" />
+        {{-- <meta name="twitter:card" content="player" />
+         <meta name="twitter:player" content="{{$file->link}}" />
+         <link href="{{$file->link}}" rel="video_src" />
+         <meta content="summary_large_video" name="twitter:card" />
+         <meta content="{{$file->mime_type}}" name="twitter:player:stream:content_type" />
+         <meta content="{{$file->link}}" name="twitter:player:stream" />
+         <meta content="{{$file->link}}" name="twitter:player" />
+         <meta content="{{$file->link}}" name="twitter:video" />
+         <meta name="twitter:player:stream:content_type" content="{{$file->mime_type}}" />
+         <meta content="{{$dimensions['width']}}" property="og:image:width" />
+         <meta content="{{$dimensions['height']}}" property="og:image:height" />
+         <meta content="{{$dimensions['width']}}" property="twitter:player:width" />
+         <meta content="{{$dimensions['height']}}" property="twitter:player:height" />--}}
+    @else
+        <meta content="article" property="og:type" />
+
     @endif
     <meta content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" property="og:description" />
     <meta content="@ShotSaver" name="twitter:site" />
