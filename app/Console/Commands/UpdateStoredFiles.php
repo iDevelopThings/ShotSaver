@@ -45,9 +45,16 @@ class UpdateStoredFiles extends Command
         $bar = $this->output->createProgressBar($files->count());
 
         foreach ($files as $file) {
-            $this->info('Current File: ' . $file->id);
+            // $this->info('Current File: ' . $file->id);
 
             $fileName = str_replace('ShotSaver/', '', $file->file);
+
+            $fileContents = @file_get_contents($file->link);
+
+            if (!$fileContents) {
+                $file->delete();
+                continue;
+            }
 
             $response = Storage::cloud()->put(
                 $fileName,
@@ -55,7 +62,7 @@ class UpdateStoredFiles extends Command
                 'public'
             );
 
-            $file->link = Storage::cloud()->url($response);
+            $file->link = Storage::cloud()->url($file->file);
             $file->save();
 
             $bar->advance();
