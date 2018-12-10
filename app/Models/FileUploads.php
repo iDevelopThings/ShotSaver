@@ -149,6 +149,10 @@ class FileUploads extends Model
      */
     public function saveView()
     {
+        if ($this->views()->whereIp(request()->ip())->first()) {
+            return;
+        }
+
         $view     = new FileView;
         $view->ip = request()->ip();
 
