@@ -33,6 +33,8 @@
         <meta content="article" property="og:type" />
 
     @endif
+
+    <meta name="theme-color" content="#0084da">
     <meta content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" property="og:description" />
     <meta content="@ShotSaver" name="twitter:site" />
     <meta content="ShotSaver" name="twitter:title" />
