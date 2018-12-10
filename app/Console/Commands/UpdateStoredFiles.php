@@ -49,8 +49,8 @@ class UpdateStoredFiles extends Command
             foreach ($files as $file) {
                 // $this->info('Current File: ' . $file->id);
 
-                $fileLink = str_replace('/shotsaver/ShotSaver/', '/shotsaver/', $file->link);
-                $fileName = str_replace('/ShotSaver', '', $file->name);
+                //$fileLink = str_replace('/shotsaver/ShotSaver/', '/shotsaver/', $file->link);
+                $fileName = str_replace('/ShotSaver', '', $file->file);
 
                 /*$fileContents = @file_get_contents($file->link);
 
@@ -65,8 +65,8 @@ class UpdateStoredFiles extends Command
                     'public'
                 );*/
 
-                $file->link = $fileLink;
-                $file->name = $fileName;
+
+                $file->file = $fileName;
                 $file->save();
 
                 $bar->advance();
