@@ -15,7 +15,7 @@
         @endif
     @elseif($type == 'video')
         <meta content="video.other" property="og:type" />
-        <meta content="{{$file->link}}" property="og:video" />
+        {{--<meta content="{{$file->link}}" property="og:video" />--}}
         {{-- <meta name="twitter:card" content="player" />
          <meta name="twitter:player" content="{{$file->link}}" />
          <link href="{{$file->link}}" rel="video_src" />
