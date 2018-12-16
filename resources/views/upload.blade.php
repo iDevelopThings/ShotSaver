@@ -20,7 +20,7 @@
         <meta property="og:video:height" content="1080">
         <meta property="og:video:type" content="application/mp4">
         <meta property="og:type" content="video.other">
-        <meta property="og:image" content="https://i.ytimg.com/vi/wKpf0VcO1W8/maxresdefault.jpg">
+        <meta property="og:image" content="{{$file->thumbnail_url}}">
 
         {{--<meta content="video.other" property="og:type" />--}}
         {{--<meta content="{{$file->link}}" property="og:video" />--}}
