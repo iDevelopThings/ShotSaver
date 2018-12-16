@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\UpdateMimeTypes;
 use App\Console\Commands\UpdateSpaceUsed;
+use App\Console\Commands\UpdateStoredFileDomains;
 use App\Console\Commands\UpdateStoredFiles;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
         UpdateSpaceUsed::class,
         UpdateMimeTypes::class,
         UpdateStoredFiles::class,
+        UpdateStoredFileDomains::class,
     ];
 
     /**
