@@ -38,4 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('remove-description', 'FileController@removeDescription')->name('removeFileDescription');
     });
 
+    Route::get('/user', 'UserController@settings')->name('user');
+    Route::post('/user/change-password', 'UserController@changePassword')->name('user.change-password');
+
 });
