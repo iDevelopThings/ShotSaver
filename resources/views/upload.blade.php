@@ -6,10 +6,13 @@
     @if($type == 'image')
         <meta name="twitter:card" content="summary_large_image" />
         <meta property="og:image" content="{{$file->link}}">
-        <meta property="og:image:width" content="1920">
-        <meta property="og:image:height" content="1080">
         <meta property="og:image:type" content="{{$file->mime_type}}">
         <meta property="og:type" content="image">
+
+        @if($dimensions != null)
+            <meta property="og:image:width" content="{{$dimensions['width']}}" />
+            <meta property="og:image:height" content="{{$dimensions['height']}}" />
+        @endif
 
         {{--<link href="{{$file->link}}" rel="image_src" />
 
