@@ -14,7 +14,15 @@
             <meta content="{{$dimensions['height']}}" property="og:image:height" />
         @endif
     @elseif($type == 'video')
-        <meta content="video.other" property="og:type" />
+
+        <meta property="og:video" content="{{$file->link}}">
+        <meta property="og:video:width" content="1920">
+        <meta property="og:video:height" content="1080">
+        <meta property="og:video:type" content="application/mp4">
+        <meta property="og:type" content="video.other">
+        <meta property="og:image" content="https://i.ytimg.com/vi/wKpf0VcO1W8/maxresdefault.jpg">
+
+        {{--<meta content="video.other" property="og:type" />--}}
         {{--<meta content="{{$file->link}}" property="og:video" />--}}
         {{-- <meta name="twitter:card" content="player" />
          <meta name="twitter:player" content="{{$file->link}}" />
