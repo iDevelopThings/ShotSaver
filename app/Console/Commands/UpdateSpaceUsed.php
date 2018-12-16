@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\FileUploads;
+use App\Models\FileUpload;
 use function app_path;
 use Illuminate\Console\Command;
 
@@ -39,7 +39,7 @@ class UpdateSpaceUsed extends Command
 	 */
 	public function handle()
 	{
-		$uploads = FileUploads::all();
+		$uploads = FileUpload::all();
 		foreach ($uploads as $upload) {
 			$upload->size_in_bytes = filesize(app_path() . '/../public/uploads/' . $upload->file);
 			$upload->save();

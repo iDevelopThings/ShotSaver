@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\FileUploads;
+use App\Models\FileUpload;
 use Illuminate\Console\Command;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\DB;
@@ -42,7 +42,7 @@ class UpdateStoredFileDomains extends Command
     public function handle()
     {
         DB::transaction(function () {
-            $files = FileUploads::get();
+            $files = FileUpload::get();
 
             $bar = $this->output->createProgressBar($files->count());
 

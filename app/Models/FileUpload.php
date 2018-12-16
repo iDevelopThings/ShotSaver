@@ -10,7 +10,7 @@ use getID3;
 use Illuminate\Database\Eloquent\Model;
 use function public_path;
 
-class FileUploads extends Model
+class FileUpload extends Model
 {
     protected $guarded = ['id'];
 
@@ -103,7 +103,7 @@ class FileUploads extends Model
 
     public function favourites()
     {
-        return $this->hasMany(Favourite::class, 'favourable_id', 'id')->where('favourable_type', FileUploads::class);
+        return $this->hasMany(Favourite::class, 'favourable_id', 'id')->where('favourable_type', FileUpload::class);
     }
 
     /**
@@ -115,7 +115,7 @@ class FileUploads extends Model
     {
         $favourite = Favourite::where('user_id', auth()->id())
             ->where('favourable_id', $this->id)
-            ->where('favourable_type', FileUploads::class)
+            ->where('favourable_type', FileUpload::class)
             ->first();
 
         if ($favourite !== null) {
@@ -126,7 +126,7 @@ class FileUploads extends Model
             $favourite                  = new Favourite;
             $favourite->user_id         = auth()->id();
             $favourite->favourable_id   = $this->id;
-            $favourite->favourable_type = FileUploads::class;
+            $favourite->favourable_type = FileUpload::class;
             $favourite->save();
 
             return true;
@@ -141,7 +141,7 @@ class FileUploads extends Model
      */
     public function views()
     {
-        return $this->hasMany(FileView::class, 'file_upload_id');
+        return $this->hasMany(FileView::class);
     }
 
     /**

@@ -11,7 +11,7 @@ class FileView extends Model
 
     public function file()
     {
-        return $this->belongsTo(FileUploads::class);
+        return $this->belongsTo(FileUpload::class);
     }
 
 }

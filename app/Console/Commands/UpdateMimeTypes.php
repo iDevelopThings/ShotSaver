@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\FileUploads;
+use App\Models\FileUpload;
 use Illuminate\Console\Command;
 use function mime_content_type;
 
@@ -40,7 +40,7 @@ class UpdateMimeTypes extends Command
 	public function handle()
 	{
 
-		$uploads = FileUploads::all();
+		$uploads = FileUpload::all();
 		foreach ($uploads as $upload) {
 			$upload->mime_type = mime_content_type(app_path() . '/../public/uploads/' . $upload->file);
 			$upload->save();

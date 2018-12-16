@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Helpers\FileValidation;
-use App\Models\FileUploads;
+use App\Models\FileUpload;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -32,7 +32,7 @@ class UploadController extends Controller
 
         if ($fileName = Storage::cloud()->putFile('', $file, 'public')) {
 
-            $upload = FileUploads::create([
+            $upload = FileUpload::create([
                 'user_id'       => $user->id,
                 'type'          => $file->getClientOriginalExtension(),
                 'name'          => $randStr,

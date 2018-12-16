@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FileUploads;
+use App\Models\FileUpload;
 use Aws\S3\Exception\S3Exception;
 use Faker\Provider\File;
 use Illuminate\Http\Request;
@@ -23,7 +23,7 @@ class FileController extends Controller
      */
     public function viewFile($file)
     {
-        $file = FileUploads::where('name', $file)->first();
+        $file = FileUpload::where('name', $file)->first();
 
         if (!$file) {
             abort(404);
@@ -91,7 +91,7 @@ class FileController extends Controller
      */
     public function addFileDescription(Request $request, $file)
     {
-        $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
+        $file = FileUpload::where('name', $file)->where('user_id', Auth::user()->id)->first();
         if (!$file) {
             abort(404);
         }
@@ -117,7 +117,7 @@ class FileController extends Controller
      */
     public function viewEditDescription(Request $request, $file)
     {
-        $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
+        $file = FileUpload::where('name', $file)->where('user_id', Auth::user()->id)->first();
         if (!$file) {
             abort(404);
         }
@@ -136,7 +136,7 @@ class FileController extends Controller
      */
     public function editDescription(Request $request, $file)
     {
-        $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
+        $file = FileUpload::where('name', $file)->where('user_id', Auth::user()->id)->first();
         if (!$file) {
             abort(404);
         }
@@ -162,7 +162,7 @@ class FileController extends Controller
      */
     public function removeDescription(Request $request, $file)
     {
-        $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
+        $file = FileUpload::where('name', $file)->where('user_id', Auth::user()->id)->first();
         if (!$file) {
             abort(404);
         }
@@ -187,7 +187,7 @@ class FileController extends Controller
      */
     public function favourite(Request $request, $file)
     {
-        $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
+        $file = FileUpload::where('name', $file)->where('user_id', Auth::user()->id)->first();
         if (!$file) {
             abort(404);
         }
@@ -223,7 +223,7 @@ class FileController extends Controller
      */
     public function delete(Request $request, $file)
     {
-        $file = FileUploads::where('name', $file)->where('user_id', Auth::user()->id)->first();
+        $file = FileUpload::where('name', $file)->where('user_id', Auth::user()->id)->first();
         if (!$file) {
             abort(404);
         }

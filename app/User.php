@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Models\FileUploads;
+use App\Models\FileUpload;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -34,7 +34,7 @@ class User extends Authenticatable
 
     public function uploads()
     {
-        return $this->hasMany(FileUploads::class);
+        return $this->hasMany(FileUpload::class);
     }
 
     public function spaceUsed()

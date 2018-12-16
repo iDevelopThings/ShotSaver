@@ -4,15 +4,25 @@
 
     <meta content="{{request()->fullUrl()}}" property="og:url" />
     @if($type == 'image')
+
+        <meta property="og:image" content="{{$file->link}}">
+        <meta property="og:image:width" content="1920">
+        <meta property="og:image:height" content="1080">
+        <meta property="og:image:type" content="{{$file->mime_type}}">
+        <meta property="og:type" content="image">
+
+        {{--<link href="{{$file->link}}" rel="image_src" />
+
         <meta name="twitter:card" content="summary" />
-        <meta content="{{$file->link}}" property="og:image" />
-        <link href="{{$file->link}}" rel="image_src" />
-        <meta content="summary_large_image" name="twitter:card" />
-        <meta content="{{$file->link}}" name="twitter:image" />
+        --}}{{--<meta name="twitter:card" content="summary_large_image"  />--}}{{--
+
+        <meta property="og:image" content="{{$file->link}}" />
+        <meta property="og:image:type" content="{{$file->mime_type}}" />
+        <meta name="twitter:image" content="{{$file->link}}" />
         @if($dimensions != null)
             <meta content="{{$dimensions['width']}}" property="og:image:width" />
             <meta content="{{$dimensions['height']}}" property="og:image:height" />
-        @endif
+        @endif--}}
     @elseif($type == 'video')
 
         <meta property="og:video" content="{{$file->link}}">
@@ -39,7 +49,6 @@
          <meta content="{{$dimensions['height']}}" property="twitter:player:height" />--}}
     @else
         <meta content="article" property="og:type" />
-
     @endif
 
     <meta name="theme-color" content="#0084da">
@@ -117,7 +126,7 @@
                                         <?php
                                         $hasFavourited = auth()->user()->favourites()
                                             ->where('favourable_id', $file->id)
-                                            ->where('favourable_type', \App\Models\FileUploads::class)
+                                            ->where('favourable_type', \App\Models\FileUpload::class)
                                             ->first();
                                         ?>
                                         @if(!$hasFavourited)
