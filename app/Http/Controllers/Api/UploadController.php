@@ -44,20 +44,16 @@ class UploadController extends Controller
 
             if ($fileType === "video") {
 
-                $tempThumbnailDir = storage_path() . '/' . str_random() . '.png';
+                $tempThumbnailDir = storage_path() . '/app/public/' . str_random() . '.png';
 
                 if ($output = shell_exec("ffmpeg -i {$file->getRealPath()} -deinterlace -an -ss 1 -t 00:00:01 -r 1 -y -vcodec mjpeg -f mjpeg {$tempThumbnailDir} 2>&1")) {
 
-                    \Illuminate\Support\Facades\Log::info($output);
-
                     $thumbnail = Storage::cloud()->putFile('', new \Illuminate\Http\File($tempThumbnailDir), 'public');
 
-                    $upload->thumbnail_url = $thumbnail;
+                    $upload->thumbnail_url = Storage::cloud()->url($thumbnail);
                     $upload->save();
 
                     unlink($tempThumbnailDir);
-
-
                 }
             }
 
