@@ -44,6 +44,13 @@ class UploadController extends Controller
                 url('/storage/' . $response['file'])
             );
 
+            if (isset($response->shortcode)) {
+                $data = $api->getVideoInfo($response->shortcode);
+
+                return response()->json($data);
+
+            }
+
 
             return response()->json($response);
 
