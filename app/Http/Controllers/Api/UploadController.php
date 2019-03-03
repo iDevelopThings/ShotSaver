@@ -41,7 +41,7 @@ class UploadController extends Controller
 
 
             $response = $api->uploadFileFromUrl(
-                url('/storage' . $response['file'])
+                url('/storage/' . $response['file'])
             );
 
 
