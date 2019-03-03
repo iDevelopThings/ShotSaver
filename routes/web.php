@@ -22,6 +22,7 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['auth:ap
     Route::get('/uploads', 'UploadController@myUploads');
 });
 Route::get('file/{file}', 'FileController@viewFile')->name('file');
+Route::get('file/t/{file}', 'FileController@viewFileTwitter')->name('file-twitter');
 
 Route::group(['middleware' => ['auth']], function () {
 

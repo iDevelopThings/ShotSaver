@@ -38,6 +38,23 @@ class FileController extends Controller
         ]);
     }
 
+    public function viewFileTwitter($file)
+    {
+        $file = FileUpload::where('name', $file)->first();
+
+        if (!$file) {
+            abort(404);
+        }
+
+        $file->saveView();
+
+        return view('upload-twitter', [
+            'file'       => $file,
+            'type'       => $file->fileType(),
+            'dimensions' => $file->dimensions(),
+        ]);
+    }
+
     /**
      * View my uploads
      *

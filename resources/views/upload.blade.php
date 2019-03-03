@@ -61,7 +61,7 @@
               content="{{$file->thumbnail_url}}">
         <meta name="twitter:player:width" content="1280">
         <meta name="twitter:player:height" content="720">
-        <meta name="twitter:player" content="{{$file->link}}">
+        <meta name="twitter:player" content="{{route('file-twitter', ['file' => $file->id])}}">
         <meta name="twitter:player:stream"
               content="{{$file->link}}">
         <meta name="twitter:player:stream:content_type" content="video/mp4">
