@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\FileValidation;
 use App\Models\FileUpload;
+use App\Support\Streamable\StreamableApi;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -30,37 +31,57 @@ class UploadController extends Controller
             return "This file type is not allowed.";
         }
 
-        if ($fileName = Storage::cloud()->putFile('', $file, 'public')) {
+        if ($fileType === "video") {
 
-            $upload = FileUpload::create([
-                'user_id'       => $user->id,
-                'type'          => $file->getClientOriginalExtension(),
-                'name'          => $randStr,
-                'file'          => $fileName,
-                'mime_type'     => $file->getClientMimeType(),
-                'link'          => Storage::cloud()->url($fileName),
-                'size_in_bytes' => filesize($file->getPathname()),
-            ]);
+            $response = [];
 
-            if ($fileType === "video") {
+            $response['file'] = $file->store('/public/temp/video');
 
-                $tempThumbnailDir = storage_path() . '/app/public/' . str_random() . '.png';
+            $api = new StreamableApi();
 
-                if ($output = shell_exec("ffmpeg -i {$file->getRealPath()} -deinterlace -an -ss 1 -t 00:00:01 -r 1 -y -vcodec mjpeg -f mjpeg {$tempThumbnailDir} 2>&1")) {
 
-                    $thumbnail = Storage::cloud()->putFile('', new \Illuminate\Http\File($tempThumbnailDir), 'public');
+            $response = $api->uploadFileFromUrl(
+                url('/storage' . $response['file'])
+            );
 
-                    $upload->thumbnail_url = Storage::cloud()->url($thumbnail);
-                    $upload->save();
 
-                    unlink($tempThumbnailDir);
-                }
-            }
+            return response()->json($response);
 
-            return route('file', $upload->name);
-        } else {
-            return "Failed to upload file.";
+            return "done";
+
         }
+
+        /* if ($fileName = Storage::cloud()->putFile('', $file, 'public')) {
+
+             $upload = FileUpload::create([
+                 'user_id'       => $user->id,
+                 'type'          => $file->getClientOriginalExtension(),
+                 'name'          => $randStr,
+                 'file'          => $fileName,
+                 'mime_type'     => $file->getClientMimeType(),
+                 'link'          => Storage::cloud()->url($fileName),
+                 'size_in_bytes' => filesize($file->getPathname()),
+             ]);
+
+             if ($fileType === "video") {
+
+                 $tempThumbnailDir = storage_path() . '/app/public/' . str_random() . '.png';
+
+                 if ($output = shell_exec("ffmpeg -i {$file->getRealPath()} -deinterlace -an -ss 1 -t 00:00:01 -r 1 -y -vcodec mjpeg -f mjpeg {$tempThumbnailDir} 2>&1")) {
+
+                     $thumbnail = Storage::cloud()->putFile('', new \Illuminate\Http\File($tempThumbnailDir), 'public');
+
+                     $upload->thumbnail_url = Storage::cloud()->url($thumbnail);
+                     $upload->save();
+
+                     unlink($tempThumbnailDir);
+                 }
+             }
+
+             return route('file', $upload->name);
+         } else {
+             return "Failed to upload file.";
+         }*/
     }
 
     /**
