@@ -41,7 +41,8 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{--{{ config('app.name', 'Laravel') }}--}}
+                    <img src="/images/shotsaver.png" alt="" class="img-responsive" style="height: 25px;">
                 </a>
             </div>
 
@@ -50,9 +51,15 @@
                 <ul class="nav navbar-nav">
                     @if (Auth::guest())
                     @else
-                        <li><a href="{{ url('/home') }}">Home</a></li>
-                        <li><a href="{{ url('/myuploads') }}">My Uploads</a></li>
-                        <li><a href="{{ url('/favourites') }}">My Favourites</a></li>
+                        <li class="{{request()->is('home') ? 'active' : ''}}">
+                            <a href="{{ url('/home') }}">Home</a>
+                        </li>
+                        <li class="{{request()->is('myuploads') ? 'active' : ''}}">
+                            <a href="{{ url('/myuploads') }}">My Uploads</a>
+                        </li>
+                        <li class="{{request()->is('favourites') ? 'active' : ''}}">
+                            <a href="{{ url('/favourites') }}">My Favourites</a>
+                        </li>
                     @endif
                 </ul>
 

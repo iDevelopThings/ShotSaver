@@ -14,19 +14,7 @@
             <meta property="og:image:height" content="{{$dimensions['height']}}" />
         @endif
 
-        {{--<link href="{{$file->link}}" rel="image_src" />
-
-        <meta name="twitter:card" content="summary" />
-        --}}{{--<meta name="twitter:card" content="summary_large_image"  />--}}{{--
-
-        <meta property="og:image" content="{{$file->link}}" />
-        <meta property="og:image:type" content="{{$file->mime_type}}" />
-        <meta name="twitter:image" content="{{$file->link}}" />
-        @if($dimensions != null)
-            <meta content="{{$dimensions['width']}}" property="og:image:width" />
-            <meta content="{{$dimensions['height']}}" property="og:image:height" />
-        @endif--}}
-    @elseif($type == 'video')
+    {{--@elseif($type == 'video')
 
         <meta property="og:video" content="{{$file->link}}">
         <meta property="og:video:width" content="1920">
@@ -34,31 +22,52 @@
         <meta property="og:video:type" content="application/mp4">
         <meta property="og:type" content="video.other">
         <meta property="og:image" content="{{$file->thumbnail_url}}">
-
-        {{--<meta content="video.other" property="og:type" />--}}
-        {{--<meta content="{{$file->link}}" property="og:video" />--}}
-        {{-- <meta name="twitter:card" content="player" />
-         <meta name="twitter:player" content="{{$file->link}}" />
-         <link href="{{$file->link}}" rel="video_src" />
-         <meta content="summary_large_video" name="twitter:card" />
-         <meta content="{{$file->mime_type}}" name="twitter:player:stream:content_type" />
-         <meta content="{{$file->link}}" name="twitter:player:stream" />
-         <meta content="{{$file->link}}" name="twitter:player" />
-         <meta content="{{$file->link}}" name="twitter:video" />
-         <meta name="twitter:player:stream:content_type" content="{{$file->mime_type}}" />
-         <meta content="{{$dimensions['width']}}" property="og:image:width" />
-         <meta content="{{$dimensions['height']}}" property="og:image:height" />
-         <meta content="{{$dimensions['width']}}" property="twitter:player:width" />
-         <meta content="{{$dimensions['height']}}" property="twitter:player:height" />--}}
-    @else
+    @else--}}
         <meta content="article" property="og:type" />
     @endif
 
     <meta name="theme-color" content="#0084da">
-    <meta content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" property="og:description" />
-    <meta content="@ShotSaver" name="twitter:site" />
-    <meta content="ShotSaver" name="twitter:title" />
-    <meta content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" name="twitter:description" />
+    <meta name="twitter:site" content="@ShotSaver" />
+    <meta name="twitter:title" content="ShotSaver" />
+    <meta name="og:site_name" content="ShotSaver" />
+    <meta name="twitter:description" content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" />
+    <meta name="description" content="Check out this video on Streamable using your phone, tablet or desktop.">
+    <meta property="og:description" content="An {{$type}} uploaded to ShotSaver by {{$file->user->name}}" />
+
+    @if($type == 'video')
+        <meta property="og:type" content="video.other">
+        <meta property="og:image"
+              content="{{$file->thumbnail_url}}" />
+        <meta property="og:image:secure_url"
+              content="{{$file->thumbnail_url}}" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1280">
+        <meta property="og:image:height" content="720">
+
+        <meta property="og:updated_time" content="{{$file->created_at->toAtomString() }}" />
+        <meta property="og:video"
+              content="{{$file->link}}">
+        <meta property="og:video:url"
+              content="{{$file->link}}">
+        <meta property="og:video:secure_url"
+              content="{{$file->link}}">
+        <meta property="og:video:type" content="video/mp4">
+        <meta property="og:video:width" content="1280">
+        <meta property="og:video:height" content="720">
+
+        <meta name="twitter:card" content="player">
+        <meta name="twitter:site" content="@ShotSaver">
+        <meta name="twitter:image"
+              content="{{$file->thumbnail_url}}">
+        <meta name="twitter:player:width" content="1280">
+        <meta name="twitter:player:height" content="720">
+        <meta name="twitter:player" content="{{$file->link}}">
+        <meta name="twitter:player:stream"
+              content="{{$file->link}}">
+        <meta name="twitter:player:stream:content_type" content="video/mp4">
+    @endif
+
+
 
 @endsection
 
