@@ -35,7 +35,7 @@ class UploadController extends Controller
 
             $response = [];
 
-            $response['file'] = $file->store('/public/temp/video');
+            $response['file'] = $file->storePublicly('/temp/video');
 
             $api = new StreamableApi();
 
