@@ -165,6 +165,16 @@ class FileUpload extends Model
         return $this->platform === 'streamable';
     }
 
+    public function streamableFileInfo()
+    {
+        return cache()->remember("streamable-video:{$this->name}", 60, function () {
+            $api  = new StreamableApi();
+            $data = $api->getVideoInfo($this->name);
+
+            return $data->files->mp4;
+        });
+    }
+
     /**
      * Gets the file link
      *
@@ -177,16 +187,7 @@ class FileUpload extends Model
     {
 
         if ($this->isStreamable()) {
-
-            $video = cache()->remember("streamable-video:{$this->name}", 60, function () {
-                $api  = new StreamableApi();
-                $data = $api->getVideoInfo($this->name);
-
-                return $data->files->mp4;
-            });
-
-            return $video->url;
-
+            return $this->streamableFileInfo()->url;
         }
 
         return $this->link;
