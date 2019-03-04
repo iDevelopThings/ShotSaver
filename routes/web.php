@@ -11,6 +11,8 @@
 |
 */
 
+use App\Support\Streamable\StreamableApi;
+
 Route::get('/', function () {
     return view('welcome');
 });

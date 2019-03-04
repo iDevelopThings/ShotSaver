@@ -14,15 +14,15 @@
             <meta property="og:image:height" content="{{$dimensions['height']}}" />
         @endif
 
-    {{--@elseif($type == 'video')
+        {{--@elseif($type == 'video')
 
-        <meta property="og:video" content="{{$file->link}}">
-        <meta property="og:video:width" content="1920">
-        <meta property="og:video:height" content="1080">
-        <meta property="og:video:type" content="application/mp4">
-        <meta property="og:type" content="video.other">
-        <meta property="og:image" content="{{$file->thumbnail_url}}">
-    @else--}}
+            <meta property="og:video" content="{{$file->link}}">
+            <meta property="og:video:width" content="1920">
+            <meta property="og:video:height" content="1080">
+            <meta property="og:video:type" content="application/mp4">
+            <meta property="og:type" content="video.other">
+            <meta property="og:image" content="{{$file->thumbnail_url}}">
+        @else--}}
         <meta content="article" property="og:type" />
     @endif
 
@@ -87,7 +87,11 @@
                                 </div>
                             </div>
                         @elseif($type === 'video')
-                            <video src="{{$file->link}}" style="width: 100%;" controls="true"></video>
+                            @if($file->platform ==='streamable')
+                                {!! $file->embed !!}
+                            @else
+                                <video src="{{$file->link}}" style="width: 100%;" controls="true"></video>
+                            @endif
                         @elseif($type === 'audio')
                             <audio src="{{$file->link}}" style="width: 100%;" controls="true"></audio>
                         @elseif($type === 'compressed')

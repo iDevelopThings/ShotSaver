@@ -18,6 +18,7 @@ class UploadController extends Controller
      * @param Request $request
      *
      * @return \Illuminate\Contracts\Routing\UrlGenerator|string
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function upload(Request $request)
     {
@@ -62,12 +63,29 @@ class UploadController extends Controller
                     sleep(1);
                 }
 
+
+                $upload = FileUpload::create([
+                    'user_id'       => $user->id,
+                    'type'          => $file->getClientOriginalExtension(),
+                    'name'          => $response->shortcode,
+                    'file'          => $response->shortcode,
+                    'mime_type'     => $file->getClientMimeType(),
+                    'link'          => Storage::cloud()->url($fileName),
+                    'size_in_bytes' => filesize(public_path('/temp/video/' . $fileName)),
+                    'info'          => json_encode($data->files->mp4),
+                    'thumbnail_url' => $data->thumbnail_url,
+                    'embed'         => $data->embed_code,
+                    'platform'      => 'streamable',
+                ]);
+
                 //Delete the file once streamable has downloaded it
-                if ($data->status === 1 && $data->percent === 100) {
+                if ($data->percent === 100) {
                     unlink(public_path('/temp/video/' . $fileName));
                 }
 
-                return response()->json($data);
+                // return response()->json($data);
+
+                return route('file', $upload->name);
 
             } else {
                 //Remove the file since something must have failed.
@@ -84,6 +102,7 @@ class UploadController extends Controller
                     'mime_type'     => $file->getClientMimeType(),
                     'link'          => Storage::cloud()->url($fileName),
                     'size_in_bytes' => filesize($file->getPathname()),
+
                 ]);
 
                 if ($fileType === "video") {

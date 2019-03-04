@@ -41,7 +41,7 @@ class FileUpload extends Model
                 break;
 
             case "video":
-                return '/images/video-icon.png';
+                return $this->thumbnail();
                 break;
 
             case "audio":
@@ -159,4 +159,23 @@ class FileUpload extends Model
         $this->views()->save($view);
     }
 
+    /**
+     * Gets the "thumbnail" that we use for this file
+     *
+     * @param int $size
+     *
+     * @return mixed|string
+     */
+    public function thumbnail($size = 100)
+    {
+        if ($this->platform === 'streamable') {
+            return str_replace('height=100', 'height=' . $size, $this->thumbnail_url);
+        }
+
+        if ($this->thumbnail_url) {
+            return $this->thumbnail_url;
+        }
+
+        return '/images/video-icon.png';
+    }
 }
