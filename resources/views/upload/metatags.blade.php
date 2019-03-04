@@ -39,9 +39,9 @@
     <meta property="og:image:height" content="720">
 
     <meta property="og:updated_time" content="{{$file->created_at->toAtomString() }}" />
-    <meta property="og:video" content="{{$file->link()}}">
-    <meta property="og:video:url" content="{{$file->link()}}">
-    <meta property="og:video:secure_url" content="{{$file->link()}}">
+    <meta property="og:video" content="{{$file->fileLink()}}">
+    <meta property="og:video:url" content="{{$file->fileLink()}}">
+    <meta property="og:video:secure_url" content="{{$file->fileLink()}}">
     <meta property="og:video:type" content="video/mp4">
     <meta property="og:video:width" content="1280">
     <meta property="og:video:height" content="720">
@@ -52,6 +52,6 @@
     <meta name="twitter:player:width" content="1280">
     <meta name="twitter:player:height" content="720">
     <meta name="twitter:player" content="{{route('file-twitter', ['file' => $file->name])}}">
-    <meta name="twitter:player:stream" content="{{$file->link()}}">
+    <meta name="twitter:player:stream" content="{{$file->fileLink()}}">
     <meta name="twitter:player:stream:content_type" content="video/mp4">
 @endif
