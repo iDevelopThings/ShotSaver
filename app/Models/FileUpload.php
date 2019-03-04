@@ -41,7 +41,7 @@ class FileUpload extends Model
                 break;
 
             case "video":
-                return $this->thumbnail();
+                return $this->thumbnail(250);
                 break;
 
             case "audio":

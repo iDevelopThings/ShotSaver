@@ -82,7 +82,11 @@
             </div>
         </div>
     @elseif($type === 'video')
-        <video src="{{$file->link}}" style="width: 100%;" controls="true"></video>
+        @if($file->platform ==='streamable')
+            {!! $file->embed !!}
+        @else
+            <video src="{{$file->link}}" style="width: 100%;" controls="true"></video>
+        @endif
     @elseif($type === 'audio')
         <audio src="{{$file->link}}" style="width: 100%;" controls="true"></audio>
     @elseif($type === 'compressed')
