@@ -55,8 +55,15 @@ class UploadController extends Controller
             if (isset($response->shortcode)) {
                 $data = $api->getVideoInfo($response->shortcode);
 
+                //We have to wait for the video to finish processing before we can delete it from our server and return a response
+                while ($data->percent !== 100) {
+                    $data = $api->getVideoInfo($response->shortcode);
+
+                    sleep(1);
+                }
+
                 //Delete the file once streamable has downloaded it
-                if ($data->status === 1) {
+                if ($data->status === 1 && $data->percent === 100) {
                     unlink(public_path('/temp/video/' . $fileName));
                 }
 
