@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Favourite;
 use App\Helpers\FileValidation;
+use App\Support\Streamable\StreamableApi;
 use App\User;
 use function file_get_contents;
 use getID3;
@@ -159,6 +160,38 @@ class FileUpload extends Model
         $this->views()->save($view);
     }
 
+    public function isStreamable()
+    {
+        return $this->platform === 'streamable';
+    }
+
+    /**
+     * Gets the file link
+     *
+     * If its a streamable type, we need to make an api request to ensure we always have the latest video
+     *
+     * @return mixed
+     * @throws \Exception
+     */
+    public function fileLink()
+    {
+
+        if($this->isStreamable()) {
+
+           $video = cache()->remember("streamable-video:{$this->name}", 60, function() {
+                $api = new StreamableApi();
+                $data = $api->getVideoInfo($this->name);
+
+                return $data->files->mp4;
+            });
+
+           return $video->mp4;
+
+        }
+
+        return $this->link;
+    }
+
     /**
      * Gets the "thumbnail" that we use for this file
      *
@@ -168,7 +201,7 @@ class FileUpload extends Model
      */
     public function thumbnail($size = 100)
     {
-        if ($this->platform === 'streamable') {
+        if ($this->isStreamable()) {
             return str_replace('height=100', 'height=' . $size, $this->thumbnail_url);
         }
 
