@@ -185,9 +185,7 @@ class FileUpload extends Model
                 return $data->files->mp4;
             });
 
-            dd($video);
-
-            return $video['mp4'];
+            return $video->url;
 
         }
 
