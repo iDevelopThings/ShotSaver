@@ -35,13 +35,16 @@ class UploadController extends Controller
 
             $response = [];
 
-            $response['file'] = $file->storePublicly('/temp/video');
+
+            $fileName = str_random() . '.'.$file->getClientOriginalExtension();
+
+            $movedFile = $file->move(public_path('/temp/video'), $fileName);
 
             $api = new StreamableApi();
 
 
             $response = $api->uploadFileFromUrl(
-                url('/storage/' . $response['file'])
+                url('/temp/video/' . $fileName)
             );
 
             if (isset($response->shortcode)) {
