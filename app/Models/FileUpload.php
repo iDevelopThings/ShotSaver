@@ -176,16 +176,18 @@ class FileUpload extends Model
     public function fileLink()
     {
 
-        if($this->isStreamable()) {
+        if ($this->isStreamable()) {
 
-           $video = cache()->remember("streamable-video:{$this->name}", 60, function() {
-                $api = new StreamableApi();
+            $video = cache()->remember("streamable-video:{$this->name}", 60, function () {
+                $api  = new StreamableApi();
                 $data = $api->getVideoInfo($this->name);
 
                 return $data->files->mp4;
             });
 
-           return $video['mp4'];
+            dd($video);
+
+            return $video['mp4'];
 
         }
 
