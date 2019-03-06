@@ -63,7 +63,6 @@ class UploadController extends Controller
                     sleep(1);
                 }
 
-
                 $upload = FileUpload::create([
                     'user_id'       => $user->id,
                     'type'          => $file->getClientOriginalExtension(),
@@ -83,10 +82,7 @@ class UploadController extends Controller
                     unlink(public_path('/temp/video/' . $fileName));
                 }
 
-                // return response()->json($data);
-
                 return route('file', $upload->name);
-
             } else {
                 //Remove the file since something must have failed.
                 unlink(public_path('/temp/video/' . $fileName));
@@ -105,7 +101,7 @@ class UploadController extends Controller
 
                 ]);
 
-                if ($fileType === "video") {
+                /*if ($fileType === "video") {
 
                     $tempThumbnailDir = storage_path() . '/app/public/' . str_random() . '.png';
 
@@ -119,15 +115,13 @@ class UploadController extends Controller
 
                         unlink($tempThumbnailDir);
                     }
-                }
+                }*/
 
                 return route('file', $upload->name);
             } else {
                 return "Failed to upload file.";
             }
         }
-
-
     }
 
     /**

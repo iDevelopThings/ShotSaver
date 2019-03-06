@@ -132,7 +132,6 @@ class FileUpload extends Model
 
             return true;
         }
-
     }
 
     /**
@@ -167,6 +166,14 @@ class FileUpload extends Model
 
     public function streamableFileInfo()
     {
+        if (!$this->isStreamable()) {
+            $class         = new \stdClass();
+            $class->width  = 1920;
+            $class->height = 1080;
+
+            return $class;
+        }
+
         return cache()->remember("streamable-video:{$this->name}", 60, function () {
             $api  = new StreamableApi();
             $data = $api->getVideoInfo($this->name);
@@ -185,7 +192,6 @@ class FileUpload extends Model
      */
     public function fileLink()
     {
-
         if ($this->isStreamable()) {
             return $this->streamableFileInfo()->url;
         }

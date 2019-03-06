@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="panel-footer">
-        <ul class="list-inline list-unstyled">
+        <ul class="list-inline list-unstyled" style="margin: 0;">
             <li>
                 Size <strong>{{$upload->size()}}</strong> MB
             </li>

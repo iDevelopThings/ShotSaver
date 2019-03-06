@@ -1,5 +1,5 @@
 // Body
-$body-bg: #f5f8fa;
+$body-bg: #131e26;
 
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
@@ -19,16 +19,27 @@ $brand-danger: #bf5329;
 $font-family-sans-serif: "Montserrat", sans-serif;
 $font-size-base: 14px;
 $line-height-base: 1.6;
-$text-color: #636b6f;
+
+$text-color: #c0bcb5;
+$text-muted: darken($text-color, 10%);
 
 // Navbar
-$navbar-default-bg: #fff;
-$navbar-default-link-color: #555;
+$navbar-default-bg: #17181c;
+$navbar-default-link-color: #c8c5bf;
 $navbar-default-link-hover-color: #626be3;
 $navbar-default-link-active-color: #626be3;
+$navbar-padding-horizontal: 25px;
+$navbar-padding-vertical: 25px;
 
 // Buttons
 $btn-default-color: $text-color;
+$btn-default-bg: lighten($body-bg, 5%);
+$btn-default-border: lighten($body-bg, 5%);
+
+$btn-danger-border: $brand-danger;
+$btn-info-border: $brand-info;
+$btn-success-border: $brand-success;
+$btn-primary-border: $brand-primary;
 
 // Inputs
 $input-border: lighten($text-color, 40%);
@@ -36,4 +47,19 @@ $input-border-focus: lighten($brand-primary, 25%);
 $input-color-placeholder: lighten($text-color, 30%);
 
 // Panels
-$panel-default-heading-bg: #fff;
+$panel-default-heading-bg: #17181c;
+$panel-default-text: $text-muted;
+$panel-footer-bg: #17181c;
+$panel-bg: #17181c;
+
+
+//Progress bars
+$progress-bg: lighten($body-bg, 10%);
+
+//Inputs
+$input-bg: lighten($body-bg, 5%);
+$input-color: $text-color;
+$input-border: lighten($body-bg, 10%);
+
+$input-bg-disabled: darken($body-bg, 10%);
+
