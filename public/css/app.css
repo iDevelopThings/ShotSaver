@@ -6723,7 +6723,7 @@ button.close {
 
 .modal-content {
   position: relative;
-  background-color: #fff;
+  background-color: #1c2b37;
   border: 1px solid #999;
   border: 1px solid rgba(0, 0, 0, 0.2);
   border-radius: 6px;
@@ -6754,7 +6754,7 @@ button.close {
 
 .modal-header {
   padding: 15px;
-  border-bottom: 1px solid #e5e5e5;
+  border-bottom: 1px solid #243948;
 }
 
 .modal-header:before, .modal-header:after {
@@ -6783,7 +6783,7 @@ button.close {
 .modal-footer {
   padding: 15px;
   text-align: right;
-  border-top: 1px solid #e5e5e5;
+  border-top: 1px solid #243948;
 }
 
 .modal-footer:before, .modal-footer:after {
@@ -7657,6 +7657,7 @@ body {
 .navbar-nav > li > a {
   padding-left: 25px;
   padding-right: 25px;
+  font-weight: 900;
 }
 
 .dropzone {
@@ -7783,6 +7784,39 @@ body {
 
 .file-upload .preview:hover .overlay {
   display: block;
+}
+
+.file-list > li {
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #1c2b37;
+}
+
+.file-list > li.disabled-state {
+  background-color: #2d4659;
+  cursor: not-allowed;
+  color: white;
+}
+
+.file-list > li.disabled-state button {
+  cursor: not-allowed;
+}
+
+.file-list > li:hover, .file-list > li:focus {
+  background: #1c2b37;
+}
+
+.file-list > li > .row {
+  line-height: 36px;
+}
+
+.favourite-button {
+  margin-left: 20px;
+  color: #fcc700;
+}
+
+.favourite-button:hover, .favourite-button:focus {
+  color: #c99f00;
 }
 
 /*# sourceMappingURL=app.css.map */

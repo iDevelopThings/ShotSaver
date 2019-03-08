@@ -12,6 +12,7 @@ body {
 .navbar-nav > li > a {
   padding-left: 25px;
   padding-right: 25px;
+  font-weight: 900;
 }
 
 .dropzone {
@@ -144,5 +145,43 @@ body {
         display: block;
       }
     }
+  }
+}
+
+.file-list {
+  > li {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid lighten($body-bg, 5%);
+
+    &.disabled-state {
+      background-color: lighten($body-bg, 15%);
+      cursor: not-allowed;
+      color: white;
+
+      button {
+        cursor: not-allowed;
+
+      }
+    }
+
+
+    &:hover, &:focus {
+      background: lighten($body-bg, 5%);
+    }
+
+    > .row {
+      line-height: 36px;
+
+    }
+  }
+}
+
+.favourite-button {
+  margin-left: 20px;
+  color: #fcc700;
+
+  &:hover, &:focus {
+    color: darken(#fcc700, 10%);
   }
 }

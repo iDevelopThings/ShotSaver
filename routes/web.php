@@ -20,6 +20,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['auth:api', 'cors']], function () {
+    Route::get('/files', 'FileController@files');
+    Route::get('/files/{file}', 'FileController@file');
+    Route::post('/files/{file}/favourite', 'FileController@favourite');
+    Route::delete('/files/{file}', 'FileController@delete');
+});
+
+Route::group(['prefix' => 'api', 'namespace' => 'Api', 'middleware' => ['auth:api', 'cors']], function () {
     Route::post('/upload', 'UploadController@upload');
     Route::get('/uploads', 'UploadController@myUploads');
 });

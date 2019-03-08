@@ -65,12 +65,12 @@ class FileController extends Controller
     public function uploads(Request $request)
     {
         //Its helpful to make sure we always know what page we're on
-        if (!$request->has('page')) {
+        /*if (!$request->has('page')) {
             return redirect()->route('my-uploads', ['page' => 1]);
-        }
+        }*/
 
 
-        $uploads = $request->user()
+        /*$uploads = $request->user()
             ->uploads();
 
         $filters = ['created_at', 'size_in_bytes', 'mime_type'];
@@ -86,13 +86,13 @@ class FileController extends Controller
         }
 
         $uploads = $uploads->orderBy($filter, $order)
-            ->paginate(20);
+            ->paginate(20);*/
 
 
         $spaceUsed = $request->user()->spaceUsed();
 
         return view('uploads', [
-            'uploads'      => $uploads,
+            //'uploads'      => $uploads,
             'spaceUsed'    => $spaceUsed,
             'uploadsCount' => $request->user()->uploads()->count(),
         ]);

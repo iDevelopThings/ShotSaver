@@ -1,4 +1,3 @@
-
 window._ = require('lodash');
 
 /**
@@ -27,6 +26,7 @@ require('vue-resource');
 
 Vue.http.interceptors.push((request, next) => {
     request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken);
+    request.params['api_token'] = Laravel.apiToken;
 
     next();
 });

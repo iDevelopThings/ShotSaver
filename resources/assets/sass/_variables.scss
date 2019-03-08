@@ -63,3 +63,7 @@ $input-border: lighten($body-bg, 10%);
 
 $input-bg-disabled: darken($body-bg, 10%);
 
+//Modals
+$modal-content-bg: lighten($body-bg, 5%);
+$modal-header-border-color: lighten($body-bg, 10%);
+$modal-footer-border-color: lighten($body-bg, 10%);

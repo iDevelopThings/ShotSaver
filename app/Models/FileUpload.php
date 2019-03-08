@@ -110,11 +110,13 @@ class FileUpload extends Model
     /**
      * Allow the authed user to "favourite" a file
      *
+     * @param string $guard
+     *
      * @return bool
      */
-    public function favourite()
+    public function favourite($guard = 'web')
     {
-        $favourite = Favourite::where('user_id', auth()->id())
+        $favourite = Favourite::where('user_id', auth($guard)->id())
             ->where('favourable_id', $this->id)
             ->where('favourable_type', FileUpload::class)
             ->first();
@@ -122,7 +124,7 @@ class FileUpload extends Model
         if ($favourite !== null) {
             $favourite->delete();
 
-            return true;
+            return false;
         } else {
             $favourite                  = new Favourite;
             $favourite->user_id         = auth()->id();
@@ -217,5 +219,18 @@ class FileUpload extends Model
         }
 
         return '/images/video-icon.png';
+    }
+
+    public function transform()
+    {
+        $item = $this;
+
+        $item->thumbnail_url = $item->thumbnail(200);
+        $item->uploaded      = $item->created_at->diffForHumans();
+        $item->size          = $item->size();
+        $item->type          = ucfirst($item->fileType());
+        $item->loadingState  = false;
+
+        return $item;
     }
 }
