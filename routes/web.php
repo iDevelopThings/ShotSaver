@@ -52,3 +52,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/user/change-password', 'UserController@changePassword')->name('user.change-password');
 
 });
+
+Route::get('stream', 'FileStreamingController@stream');
+Route::get('stream/view', 'FileStreamingController@view');
+Route::get('stream/view2', 'FileStreamingController@viewother');
