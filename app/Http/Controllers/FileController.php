@@ -204,7 +204,8 @@ class FileController extends Controller
      */
     public function favourite(Request $request, $file)
     {
-        $file = FileUpload::where('name', $file)->where('user_id', Auth::user()->id)->first();
+        $file = FileUpload::where('name', $file)->first();
+
         if (!$file) {
             abort(404);
         }
